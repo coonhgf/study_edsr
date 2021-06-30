@@ -26,6 +26,9 @@ class Trainer():
         self.error_last = 1e8
 
     def train(self):
+        ### [y]
+        print("run in trainer-train()")
+        
         self.loss.step()
         epoch = self.optimizer.get_last_epoch() + 1
         lr = self.optimizer.get_lr()
@@ -70,11 +73,22 @@ class Trainer():
         self.loss.end_log(len(self.loader_train))
         self.error_last = self.loss.log[-1, -1]
         self.optimizer.schedule()
+        
+        ### [y]
+        print("end trainer-train()")
+
 
     def test(self):
+        ### [y]
+        print("run in trainer-test()")
+        
         torch.set_grad_enabled(False)
 
         epoch = self.optimizer.get_last_epoch()
+        
+        ### [y]
+        print("optimizer.get_last_epoch = {0}".format(epoch))
+        
         self.ckp.write_log('\nEvaluation:')
         self.ckp.add_log(
             torch.zeros(1, len(self.loader_test), len(self.scale))
@@ -127,6 +141,10 @@ class Trainer():
         )
 
         torch.set_grad_enabled(True)
+        
+        ### [y]
+        print("end trainer-test()")
+        
 
     def prepare(self, *args):
         device = torch.device('cpu' if self.args.cpu else 'cuda')

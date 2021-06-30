@@ -31,7 +31,7 @@
 
 # Test your own images
 #python main.py --data_test Demo --scale 4 --pre_train download --test_only --save_results
-python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/edsr/EDSR-PyTorch/yh_doownload_model/EDSR_x2.pt --test_only --save_results
+#python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/edsr/EDSR-PyTorch/yh_doownload_model/EDSR_x2.pt --test_only --save_results
 # 37.209
 python main.py --data_test Demo --scale 2 --pre_train download --test_only --save_results
 

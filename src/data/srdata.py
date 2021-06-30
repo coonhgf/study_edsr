@@ -12,6 +12,9 @@ import torch.utils.data as data
 
 class SRData(data.Dataset):
     def __init__(self, args, name='', train=True, benchmark=False):
+        ### [y]
+        print("run srdata's __init__()")
+        
         self.args = args
         self.name = name
         self.train = train
@@ -26,23 +29,55 @@ class SRData(data.Dataset):
         if args.ext.find('img') < 0:
             path_bin = os.path.join(self.apath, 'bin')
             os.makedirs(path_bin, exist_ok=True)
+            
+            ### [y]
+            print("srdata, path_bin={0}".format(path_bin))
 
         list_hr, list_lr = self._scan()
+        
+        ### [y]
+        print("srdata, len of list_hr={0}".format(len(list_hr)))
+        print("srdata, list_hr={0}".format(list_hr))
+        print("srdata, len of list_lr={0}".format(len(list_lr)))
+        print("srdata, list_lr={0}".format(list_lr))
+        
         if args.ext.find('img') >= 0 or benchmark:
             self.images_hr, self.images_lr = list_hr, list_lr
         elif args.ext.find('sep') >= 0:
+            ### [y] ori
+            #os.makedirs(
+            #    self.dir_hr.replace(self.apath, path_bin),
+            #    exist_ok=True
+            #)
+            # =>
+            tmp_dp1 = self.dir_hr.replace(self.apath, path_bin)
             os.makedirs(
-                self.dir_hr.replace(self.apath, path_bin),
+                tmp_dp1,
                 exist_ok=True
             )
+            ### [y]
+            print("see, srdata-sep, tmp_dp1={0}".format(tmp_dp1))
+            
             for s in self.scale:
+                ### [y] ori
+                #os.makedirs(
+                #    os.path.join(
+                #        self.dir_lr.replace(self.apath, path_bin),
+                #        'X{}'.format(s)
+                #    ),
+                #    exist_ok=True
+                #)
+                # =>
+                tmp_dp2 = self.dir_lr.replace(self.apath, path_bin)
                 os.makedirs(
                     os.path.join(
-                        self.dir_lr.replace(self.apath, path_bin),
+                        tmp_dp2,
                         'X{}'.format(s)
                     ),
                     exist_ok=True
                 )
+                ### [y]
+                print("see, srdata-sep, tmp_dp2={0}".format(tmp_dp2))
             
             self.images_hr, self.images_lr = [], [[] for _ in self.scale]
             for h in list_hr:
@@ -87,6 +122,12 @@ class SRData(data.Dataset):
         self.dir_lr = os.path.join(self.apath, 'LR_bicubic')
         if self.input_large: self.dir_lr += 'L'
         self.ext = ('.png', '.png')
+        
+        ### [y]
+        print("srdata, self.apath={0}".format(self.apath))
+        print("srdata, self.dir_hr={0}".format(self.dir_hr))
+        print("srdata, self.dir_lr={0}".format(self.dir_lr))
+        
 
     def _check_and_load(self, ext, img, f, verbose=True):
         if not os.path.isfile(f) or ext.find('reset') >= 0:

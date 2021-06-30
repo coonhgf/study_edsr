@@ -49,10 +49,19 @@ class checkpoint():
         now = datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
 
         if not args.load:
+            ### [y]
+            print("checkpoint-init, i think is not give(def) args.load")
+            
             if not args.save:
                 args.save = now
             self.dir = os.path.join('..', 'experiment', args.save)
+            
+            ### [y]
+            print("self.dir = {0}".format(self.dir))
         else:
+            ### [y]
+            print("checkpoint-init, give(def) args.load")
+            
             self.dir = os.path.join('..', 'experiment', args.load)
             if os.path.exists(self.dir):
                 self.log = torch.load(self.get_path('psnr_log.pt'))
