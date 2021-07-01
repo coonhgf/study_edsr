@@ -45,7 +45,14 @@ class Data:
                 
                 module_name = d if d.find('DIV2K-Q') < 0 else 'DIV2KJPEG'
                 m = import_module('data.' + module_name.lower())
+                
+                ### [y]
+                print("m, m={0}".format(m))
+                
                 testset = getattr(m, module_name)(args, train=False, name=d)
+                
+                ### [y]
+                print("testset, m={testset0}".format(testset))
 
             self.loader_test.append(
                 dataloader.DataLoader(

@@ -16,6 +16,39 @@ import torch
 import torch.optim as optim
 import torch.optim.lr_scheduler as lrs
 
+
+
+### [y]
+def log_initialize(log_name, log_dp, flag_by_day=False):
+    # exam log_dp exist
+    if not os.path.isdir(log_dp):
+        try:
+            os.makedirs(log_dp, exist_ok=True)
+        except:
+            retm = traceback.format_exc()
+            return None
+    
+    mlog = logging.getLogger(log_name)
+    mlog.setLevel(logging.DEBUG)
+    if flag_by_day:
+        mlog_fh = logging.TimedRotatingFileHandler(os.path.join(log_dp, "{0}.log".format(log_name)), \
+                                                   when='midnight', interval=1, backupCount=10, \
+                                                   encoding='utf-8', utc=True)
+        mlog_fh.suffix = "%Y%m%d"
+    else:
+        mlog_fh = logging.FileHandler(os.path.join(log_dp, "{0}.log".format(log_name)), 'w', 'utf-8')
+    mlog_fh.setLevel(logging.DEBUG)
+    mlog_ch = logging.StreamHandler()
+    mlog_ch.setLevel(logging.DEBUG)
+    mlog_fmat = logging.Formatter('%(asctime)s - [%(threadName)s][%(name)s][%(levelname)s] - %(funcName)s() :: %(message)s')
+    mlog_fh.setFormatter(mlog_fmat)
+    mlog_ch.setFormatter(mlog_fmat)
+    mlog.addHandler(mlog_fh)
+    mlog.addHandler(mlog_ch)
+    return mlog
+
+
+
 class timer():
     def __init__(self):
         self.acc = 0

@@ -10,6 +10,11 @@ from trainer import Trainer
 torch.manual_seed(args.seed)
 checkpoint = utility.checkpoint(args)
 
+### [y]
+code_root_dp = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  ## src
+sys.path.append(os.path.join(model_project_root_dp, "model"))
+sys.path.append(os.path.join(model_project_root_dp, "data"))
+
 def main():
     global model
     if args.data_test == ['video']:
@@ -24,7 +29,12 @@ def main():
             _loss = loss.Loss(args, checkpoint) if not args.test_only else None
             t = Trainer(args, loader, _model, _loss, checkpoint)
             while not t.terminate():
+                ### [y]
+                print("going to call t.train()")
                 t.train()
+                
+                ### [y]
+                print("going to call t.test()")
                 t.test()
 
             checkpoint.done()

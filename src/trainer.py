@@ -28,6 +28,7 @@ class Trainer():
     def train(self):
         ### [y]
         print("run in trainer-train()")
+        self.ckp.write_log("run in trainer-train()")
         
         self.loss.step()
         epoch = self.optimizer.get_last_epoch() + 1
@@ -76,11 +77,13 @@ class Trainer():
         
         ### [y]
         print("end trainer-train()")
+        self.ckp.write_log("end trainer-train()")
 
 
     def test(self):
         ### [y]
         print("run in trainer-test()")
+        self.ckp.write_log("run in trainer-test()")
         
         torch.set_grad_enabled(False)
 
@@ -88,6 +91,7 @@ class Trainer():
         
         ### [y]
         print("optimizer.get_last_epoch = {0}".format(epoch))
+        self.ckp.write_log("optimizer.get_last_epoch = {0}".format(epoch))
         
         self.ckp.write_log('\nEvaluation:')
         self.ckp.add_log(
@@ -144,6 +148,7 @@ class Trainer():
         
         ### [y]
         print("end trainer-test()")
+        self.ckp.write_log("end trainer-test()")
         
 
     def prepare(self, *args):
