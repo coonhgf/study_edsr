@@ -12,9 +12,10 @@ checkpoint = utility.checkpoint(args)
 
 ### [y]
 import os
+import sys
 code_root_dp = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  ## src
-sys.path.append(os.path.join(model_project_root_dp, "model"))
-sys.path.append(os.path.join(model_project_root_dp, "data"))
+sys.path.append(os.path.join(code_root_dp, "model"))
+sys.path.append(os.path.join(code_root_dp, "data"))
 
 def main():
     global model
