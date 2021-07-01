@@ -19,6 +19,8 @@ import torch.optim.lr_scheduler as lrs
 
 
 ### [y]
+import logging
+import traceback
 def log_initialize(log_name, log_dp, flag_by_day=False):
     # exam log_dp exist
     if not os.path.isdir(log_dp):

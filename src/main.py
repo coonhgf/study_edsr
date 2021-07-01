@@ -11,6 +11,7 @@ torch.manual_seed(args.seed)
 checkpoint = utility.checkpoint(args)
 
 ### [y]
+import os
 code_root_dp = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  ## src
 sys.path.append(os.path.join(model_project_root_dp, "model"))
 sys.path.append(os.path.join(model_project_root_dp, "data"))
