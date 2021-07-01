@@ -52,7 +52,7 @@ class Data:
                 testset = getattr(m, module_name)(args, train=False, name=d)
                 
                 ### [y]
-                print("testset, m={testset0}".format(testset))
+                print("testset, m={0}".format(testset))
 
             self.loader_test.append(
                 dataloader.DataLoader(
