@@ -21,6 +21,10 @@ class Data:
             for d in args.data_train:
                 module_name = d if d.find('DIV2K-Q') < 0 else 'DIV2KJPEG'
                 m = import_module('data.' + module_name.lower())
+                
+                ### [y]
+                print("m, m={0}".format(m))
+                
                 datasets.append(getattr(m, module_name)(args, name=d))
 
             self.loader_train = dataloader.DataLoader(

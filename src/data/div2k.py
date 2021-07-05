@@ -4,11 +4,11 @@ from data import srdata
 class DIV2K(srdata.SRData):
     def __init__(self, args, name='DIV2K', train=True, benchmark=False):
         ### [y]
-        print("run DIV2K's __init__()")
+        print("[y] run DIV2K's __init__()")
         
         data_range = [r.split('-') for r in args.data_range.split('/')]
         ### [y]
-        print("ori data_range = {0}".format(data_range))
+        print("[y] ori data_range = {0}".format(data_range))
         
         if train:
             data_range = data_range[0]
@@ -18,17 +18,24 @@ class DIV2K(srdata.SRData):
             else:
                 data_range = data_range[1]
         ### [y]
-        print("now data_range = {0}".format(data_range))
+        print("[y] now data_range = {0}".format(data_range))
 
         self.begin, self.end = list(map(lambda x: int(x), data_range))
         
         ###[y]
-        print("DIV2K, self.begin={0}".format(self.begin))
-        print("DIV2K, self.end={0}".format(self.end))
+        print("[y] DIV2K, self.begin={0}".format(self.begin))
+        print("[y] DIV2K, self.end={0}".format(self.end))
+        
+        ### [y]
+        print("[y] run DIV2K's super(DIV2K, self).--init---")
         
         super(DIV2K, self).__init__(
             args, name=name, train=train, benchmark=benchmark
         )
+        
+        ### [y]
+        print("[y] end DIV2K's super(DIV2K, self).--init---")
+        
 
     def _scan(self):
         names_hr, names_lr = super(DIV2K, self)._scan()
@@ -36,14 +43,19 @@ class DIV2K(srdata.SRData):
         names_lr = [n[self.begin - 1:self.end] for n in names_lr]
         
         ### [y]
-        print("names_hr={0}".format(names_hr))
-        print("names_lr={0}".format(names_lr))
+        print("[y] names_hr={0}".format(names_hr))
+        print("[y] names_lr={0}".format(names_lr))
+        self.srdata_log.debug("[y] names_hr={0}".format(names_hr))
+        self.srdata_log.debug("[y] names_lr={0}".format(names_lr))
+        print("[y] len of names_hr={0}".format(len(names_hr)))
+        print("[y] len of names_lr={0}".format(len(names_lr)))
 
         return names_hr, names_lr
 
     def _set_filesystem(self, dir_data):
         ### [y]
-        print("now in DIV2K's _set_filesystem()")
+        print("[y] now in DIV2K's _set_filesystem()")
+        self.srdata_log.debug("[y] now in DIV2K's _set_filesystem()")
         
         super(DIV2K, self)._set_filesystem(dir_data)
         self.dir_hr = os.path.join(self.apath, 'DIV2K_train_HR')
@@ -51,7 +63,10 @@ class DIV2K(srdata.SRData):
         if self.input_large: self.dir_lr += 'L'
         
         ### [y]
-        print("self.apath={0}".format(self.apath))
-        print("self.dir_hr={0}".format(self.dir_hr))
-        print("self.dir_lr={0}".format(self.dir_lr))
+        print("[y] self.apath={0}".format(self.apath))
+        print("[y] self.dir_hr={0}".format(self.dir_hr))
+        print("[y] self.dir_lr={0}".format(self.dir_lr))
+        self.srdata_log.debug("[y] self.apath={0}".format(self.apath))
+        self.srdata_log.debug("[y] self.dir_hr={0}".format(self.dir_hr))
+        self.srdata_log.debug("[y] self.dir_lr={0}".format(self.dir_lr))
 

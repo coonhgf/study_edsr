@@ -8,8 +8,18 @@ import imageio
 import torch
 import torch.utils.data as data
 
+
+### [y]
+from utility import log_initialize
+
+
 class Demo(data.Dataset):
     def __init__(self, args, name='Demo', train=False, benchmark=False):
+        ### [y]
+        print("run Demo's __init__()")
+        srdata_log_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_gen_log"
+        self.demo_log = log_initialize("Demo-py", srdata_log_dp)
+        
         self.args = args
         self.name = name
         self.scale = args.scale
@@ -25,6 +35,10 @@ class Demo(data.Dataset):
 
     def __getitem__(self, idx):
         filename = os.path.splitext(os.path.basename(self.filelist[idx]))[0]
+        
+        ### [y]
+        self.demo_log.debug("demo-py, filename={0}".format(filename))
+        
         lr = imageio.imread(self.filelist[idx])
         lr, = common.set_channel(lr, n_channels=self.args.n_colors)
         lr_t, = common.np2Tensor(lr, rgb_range=self.args.rgb_range)

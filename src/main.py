@@ -32,11 +32,11 @@ def main():
             t = Trainer(args, loader, _model, _loss, checkpoint)
             while not t.terminate():
                 ### [y]
-                print("going to call t.train()")
+                print("[y] going to call t.train()")
                 t.train()
                 
                 ### [y]
-                print("going to call t.test()")
+                print("[y] going to call t.test()")
                 t.test()
 
             checkpoint.done()
