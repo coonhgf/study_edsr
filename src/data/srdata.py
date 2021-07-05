@@ -18,9 +18,7 @@ from utility import log_initialize
 class SRData(data.Dataset):
     def __init__(self, args, name='', train=True, benchmark=False):
         ### [y]
-        print("run srdata's __init__()")
-        srdata_log_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_gen_log"
-        self.srdata_log = log_initialize("srdata", srdata_log_dp)
+        print("[y] run srdata's __init__()")
         
         self.args = args
         self.name = name
@@ -38,20 +36,13 @@ class SRData(data.Dataset):
             os.makedirs(path_bin, exist_ok=True)
             
             ### [y]
-            print("srdata, path_bin={0}".format(path_bin))
-            self.srdata_log.debug("srdata, path_bin={0}".format(path_bin))
+            print("[y] srdata, path_bin={0}".format(path_bin))
 
         list_hr, list_lr = self._scan()
         
         ### [y]
-        print("srdata, len of list_hr={0}".format(len(list_hr)))
-        print("srdata, list_hr={0}".format(list_hr))
-        print("srdata, len of list_lr={0}".format(len(list_lr)))
-        print("srdata, list_lr={0}".format(list_lr))
-        self.srdata_log.debug("srdata, len of list_hr={0}".format(len(list_hr)))
-        self.srdata_log.debug("srdata, list_hr={0}".format(list_hr))
-        self.srdata_log.debug("srdata, len of list_lr={0}".format(len(list_lr)))
-        self.srdata_log.debug("srdata, list_lr={0}".format(list_lr))
+        print("[y] srdata, len of list_hr={0}".format(len(list_hr)))
+        print("[y] srdata, len of list_lr={0}".format(len(list_lr)))
         
         if args.ext.find('img') >= 0 or benchmark:
             self.images_hr, self.images_lr = list_hr, list_lr
@@ -68,8 +59,7 @@ class SRData(data.Dataset):
                 exist_ok=True
             )
             ### [y]
-            print("see, srdata-sep, tmp_dp1={0}".format(tmp_dp1))
-            self.srdata_log.debug("see, srdata-sep, tmp_dp1={0}".format(tmp_dp1))
+            print("[y] see, srdata-sep, tmp_dp1={0}".format(tmp_dp1))
             
             for s in self.scale:
                 ### [y] ori
@@ -91,7 +81,6 @@ class SRData(data.Dataset):
                 )
                 ### [y]
                 print("see, srdata-sep, tmp_dp2={0}".format(tmp_dp2))
-                self.srdata_log.debug("see, srdata-sep, tmp_dp2={0}".format(tmp_dp2))
             
             self.images_hr, self.images_lr = [], [[] for _ in self.scale]
             for h in list_hr:
@@ -112,9 +101,15 @@ class SRData(data.Dataset):
                 self.repeat = 0
             else:
                 self.repeat = max(n_patches // n_images, 1)
-
+        
+        ### [y]
+        print("[y] end srdata's __init__()")
+        
     # Below functions as used to prepare images
     def _scan(self):
+        ### [y]
+        print("[y] start srdata's _scan()")
+        
         names_hr = sorted(
             glob.glob(os.path.join(self.dir_hr, '*' + self.ext[0]))
         )
@@ -127,13 +122,15 @@ class SRData(data.Dataset):
                         s, filename, s, self.ext[1]
                     )
                 ))
+                
+        ### [y]
+        print("[y] end srdata's _scan()")
 
         return names_hr, names_lr
 
     def _set_filesystem(self, dir_data):
         ### [y]
-        print("now in DIV2K's _set_filesystem()")
-        self.srdata_log.debug("now in DIV2K's _set_filesystem()")
+        print("[y] now in srdata's _set_filesystem()")
         
         self.apath = os.path.join(dir_data, self.name)
         self.dir_hr = os.path.join(self.apath, 'HR')
@@ -145,9 +142,8 @@ class SRData(data.Dataset):
         print("srdata, self.apath={0}".format(self.apath))
         print("srdata, self.dir_hr={0}".format(self.dir_hr))
         print("srdata, self.dir_lr={0}".format(self.dir_lr))
-        self.srdata_log.debug("srdata, self.apath={0}".format(self.apath))
-        self.srdata_log.debug("srdata, self.dir_hr={0}".format(self.dir_hr))
-        self.srdata_log.debug("srdata, self.dir_lr={0}".format(self.dir_lr))
+        ### [y]
+        print("[y] end srdata's _set_filesystem()")
         
 
     def _check_and_load(self, ext, img, f, verbose=True):

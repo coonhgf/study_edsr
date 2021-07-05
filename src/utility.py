@@ -85,17 +85,17 @@ class checkpoint():
 
         if not args.load:
             ### [y]
-            print("checkpoint-init, i think is not give(def) args.load")
+            print("[y] checkpoint-init, i think is not give(def) args.load")
             
-            if not args.save:
+            if not args.save:  # [y] if not given save name, code will use timestamp as save name
                 args.save = now
             self.dir = os.path.join('..', 'experiment', args.save)
             
             ### [y]
-            print("self.dir = {0}".format(self.dir))
+            print("[y] self.dir = {0}".format(self.dir))
         else:
             ### [y]
-            print("checkpoint-init, give(def) args.load")
+            print("[y] checkpoint-init, give(def) args.load")
             
             self.dir = os.path.join('..', 'experiment', args.load)
             if os.path.exists(self.dir):

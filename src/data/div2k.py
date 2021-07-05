@@ -26,36 +26,34 @@ class DIV2K(srdata.SRData):
         print("[y] DIV2K, self.begin={0}".format(self.begin))
         print("[y] DIV2K, self.end={0}".format(self.end))
         
-        ### [y]
-        print("[y] run DIV2K's super(DIV2K, self).--init---")
-        
         super(DIV2K, self).__init__(
             args, name=name, train=train, benchmark=benchmark
         )
         
         ### [y]
-        print("[y] end DIV2K's super(DIV2K, self).--init---")
+        print("[y] end DIV2K's __init__()")
         
 
     def _scan(self):
+        ### [y]
+        print("[y] start DIV2K's _scan()")
+        
         names_hr, names_lr = super(DIV2K, self)._scan()
         names_hr = names_hr[self.begin - 1:self.end]
         names_lr = [n[self.begin - 1:self.end] for n in names_lr]
         
         ### [y]
-        print("[y] names_hr={0}".format(names_hr))
-        print("[y] names_lr={0}".format(names_lr))
-        self.srdata_log.debug("[y] names_hr={0}".format(names_hr))
-        self.srdata_log.debug("[y] names_lr={0}".format(names_lr))
         print("[y] len of names_hr={0}".format(len(names_hr)))
         print("[y] len of names_lr={0}".format(len(names_lr)))
+        
+        ### [y]
+        print("[y] end DIV2K's _scan()")
 
         return names_hr, names_lr
 
     def _set_filesystem(self, dir_data):
         ### [y]
         print("[y] now in DIV2K's _set_filesystem()")
-        self.srdata_log.debug("[y] now in DIV2K's _set_filesystem()")
         
         super(DIV2K, self)._set_filesystem(dir_data)
         self.dir_hr = os.path.join(self.apath, 'DIV2K_train_HR')
@@ -66,7 +64,6 @@ class DIV2K(srdata.SRData):
         print("[y] self.apath={0}".format(self.apath))
         print("[y] self.dir_hr={0}".format(self.dir_hr))
         print("[y] self.dir_lr={0}".format(self.dir_lr))
-        self.srdata_log.debug("[y] self.apath={0}".format(self.apath))
-        self.srdata_log.debug("[y] self.dir_hr={0}".format(self.dir_hr))
-        self.srdata_log.debug("[y] self.dir_lr={0}".format(self.dir_lr))
+        ### [y]
+        print("[y] end DIV2K's _set_filesystem()")
 
