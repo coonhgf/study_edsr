@@ -132,16 +132,16 @@ class SRData(data.Dataset):
         ### [y]
         print("[y] now in srdata's _set_filesystem()")
         
-        self.apath = os.path.join(dir_data, self.name)
+        self.apath = os.path.join(dir_data, self.name)  # [y] "../../../../Eclipse_ws_data/edsr/dataset/DIV2K"
         self.dir_hr = os.path.join(self.apath, 'HR')
         self.dir_lr = os.path.join(self.apath, 'LR_bicubic')
         if self.input_large: self.dir_lr += 'L'
         self.ext = ('.png', '.png')
         
         ### [y]
-        print("srdata, self.apath={0}".format(self.apath))
-        print("srdata, self.dir_hr={0}".format(self.dir_hr))
-        print("srdata, self.dir_lr={0}".format(self.dir_lr))
+        print("[y]srdata, self.apath={0}".format(self.apath))
+        print("[y]srdata, self.dir_hr={0}".format(self.dir_hr))
+        print("[y]srdata, self.dir_lr={0}".format(self.dir_lr))
         ### [y]
         print("[y] end srdata's _set_filesystem()")
         

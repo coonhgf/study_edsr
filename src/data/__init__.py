@@ -56,7 +56,7 @@ class Data:
                 testset = getattr(m, module_name)(args, train=False, name=d)
                 
                 ### [y]
-                print("testset, m={0}".format(testset))
+                print("testset, testset={0}".format(testset))
 
             self.loader_test.append(
                 dataloader.DataLoader(
