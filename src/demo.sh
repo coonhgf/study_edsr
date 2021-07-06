@@ -43,7 +43,8 @@ python main.py --model EDSR --scale 2 --patch_size 96 --save yh_edsr_baseline_x2
 #python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/edsr/EDSR-PyTorch/yh_doownload_model/EDSR_x2.pt --test_only --save_results
 # 37.209
 #python main.py --data_test Demo --scale 2 --pre_train download --test_only --save_results
-
+# 37.209, test my trained model
+python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2/model --test_only --save_results
 
 
 
