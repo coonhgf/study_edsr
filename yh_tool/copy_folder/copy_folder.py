@@ -12,7 +12,6 @@ import hashlib
 
 
 
-
 def simple_copytree(src, dst, symlinks=False, ignore=None):
     try:
         for item in os.listdir(src):
@@ -109,8 +108,16 @@ if __name__ == '__main__':
     # copy folder
     for a_src_folder in list_src_folder:
         tmp_src_dp = os.path.join(src_root_dp, a_src_folder)
-        retv, retm = simple_copytree(tmp_src_dp, dst_root_dp)
+        tmp_dst_dp = os.path.join(dst_root_dp, a_src_folder)
+        
+        retv, retm = create_dir(tmp_dst_dp)
         if retv != 0:
+            print("fail at copy {0} to dst".format(a_src_folder))
+            exit(-1)
+        
+        retv, retm = simple_copytree(tmp_src_dp, tmp_dst_dp)
+        if retv != 0:
+            print("fail at simple_copytree with {0}".format(a_src_folder))
             exit(-1)
     
     
