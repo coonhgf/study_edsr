@@ -168,7 +168,7 @@ if __name__ == '__main__':
             slice_fn = "{0}__{1}x2.png".format(a_dcm_fd, "%04d" % sidx)
             slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
             resize_reso = (x2_w, x2_h)  # (w, h)
-            pil_img_x2 = pil_img.resize(resize_reso, resample=PIL.Image.BICUBIC)
+            pil_img_x2 = pil_img.resize(resize_reso, resample=Image.BICUBIC)
             pil_img_x2.save(slice_fp)
             pil_img = None
             pil_img_x2 = None
