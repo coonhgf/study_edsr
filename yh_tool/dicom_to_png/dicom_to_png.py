@@ -11,6 +11,7 @@ import tarfile
 import hashlib
 import SimpleITK as sitk
 import pandas
+from PIL import Image
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
@@ -60,6 +61,15 @@ def create_dir(the_dp):
         print(retm)
         return -1, retm
     return 0, ""
+
+
+def apply_lung_window(np_hu_img):
+    set_lung_window = np.array([-1200.0, 600.0])  # [y] from hu to hu, not (window_center, window_length)
+    np_lw_img = (np_hu_img-set_lung_window[0]) / (set_lung_window[1]-set_lung_window[0])
+    np_lw_img[np_lw_img < 0]=0
+    np_lw_img[np_lw_img > 1]=1
+    np_lw_img = (np_lw_img*255).astype('uint8')
+    return 0, np_lw_img
 
 
 if __name__ == '__main__':
@@ -139,5 +149,15 @@ if __name__ == '__main__':
         np_hu_img = sitk.GetArrayFromImage(itk_image)
         print("shape of np_hu_img={0}".format(np_hu_img.shape))
         
+        # convert to lung window
+        _, np_lw = apply_lung_window(np_hu_img)
+        
+        # save to png
+        for sidx in range(np_hu_img.shape[0]):
+            slice_fn = "{0}__{1}.png".format(a_dcm_fd, "%04d % sidx")
+            slice_fp = os.path.join(tmp_dst_dp, slice_fn)
+            
+            pil_img = Image.fromarray(np_lw[sidx, :, :])
+            pil_img.save(slice_fp)
         
     print("copy folder end")
