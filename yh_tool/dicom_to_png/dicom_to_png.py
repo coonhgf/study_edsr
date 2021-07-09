@@ -38,6 +38,31 @@ def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
         return 0, got_seri_id
 
 
+def clear_dir(the_dp):
+    for filename in os.listdir(the_dp):
+        file_path = os.path.join(the_dp, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except:
+            retm = traceback.format_exc()
+            print(retm)
+            return -1, retm
+    return 0, ""
+
+
+def create_dir(the_dp):
+    try:
+        os.makedirs(the_dp, exist_ok=True)
+    except:
+        retm = traceback.format_exc()
+        print(retm)
+        return -1, retm
+    return 0, ""
+
+
 if __name__ == '__main__':
     print("convert dicom to png start!")
     #
