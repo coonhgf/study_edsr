@@ -17,8 +17,8 @@ class Demo(data.Dataset):
     def __init__(self, args, name='Demo', train=False, benchmark=False):
         ### [y]
         print("run Demo's __init__()")
-        srdata_log_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_gen_log"
-        self.demo_log = log_initialize("Demo-py", srdata_log_dp)
+        #srdata_log_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_gen_log"
+        #self.demo_log = log_initialize("Demo-py", srdata_log_dp)
         
         self.args = args
         self.name = name
@@ -37,7 +37,7 @@ class Demo(data.Dataset):
         filename = os.path.splitext(os.path.basename(self.filelist[idx]))[0]
         
         ### [y]
-        self.demo_log.debug("demo-py, filename={0}".format(filename))
+        #self.demo_log.debug("demo-py, filename={0}".format(filename))
         
         lr = imageio.imread(self.filelist[idx])
         lr, = common.set_channel(lr, n_channels=self.args.n_colors)

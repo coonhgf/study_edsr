@@ -1,7 +1,7 @@
 # EDSR baseline model (x2) + JPEG augmentation
 #python main.py --model EDSR --scale 2 --patch_size 96 --save edsr_baseline_x2 --reset --data_train DIV2K+DIV2K-Q75 --data_test DIV2K+DIV2K-Q75
 # 37.209
-python main.py --model EDSR --scale 2 --patch_size 96 --save yh_edsr_baseline_x2 --reset --data_train DIV2K --data_test DIV2K
+#python main.py --model EDSR --scale 2 --patch_size 96 --save yh_edsr_baseline_x2 --reset --data_train DIV2K --data_test DIV2K
 
 # EDSR baseline model (x3) - from EDSR baseline model (x2)
 #python main.py --model EDSR --scale 3 --patch_size 144 --save edsr_baseline_x3 --reset --pre_train [pre-trained EDSR_baseline_x2 model dir]
@@ -44,7 +44,10 @@ python main.py --model EDSR --scale 2 --patch_size 96 --save yh_edsr_baseline_x2
 # 37.209
 #python main.py --data_test Demo --scale 2 --pre_train download --test_only --save_results
 # 37.209, test my trained model
-python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2/model --test_only --save_results
+#python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2/model --test_only --save_results
+# 37.209, test my trained model
+python main.py --data_test Demo --scale 2 --pre_train download --test_only --save_results
+#python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2/model --test_only --save_results
 
 
 
