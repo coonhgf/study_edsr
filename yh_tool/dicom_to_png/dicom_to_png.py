@@ -76,7 +76,8 @@ if __name__ == '__main__':
     print("convert dicom to png start!")
     #
     # read dicom by seri_id(will need csv mapping file), 
-    # => save each slice dicom to png, filename will be folder_name__4digits_number.png
+    # => save each slice dicom to png, filename will be folder_name__4digits_number.png, as HighResolution
+    # => resize X2(i.e. 512 to 256), as LowResolution X2
     #
     
     #
@@ -88,7 +89,9 @@ if __name__ == '__main__':
     #
     src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
     src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val_debug.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
-    dst_png_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/val"
+    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/yh_edsr_csh_axial_val_HR"
+    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/yh_edsr_csh_axial_val_LR_bicubic/X2"
+    
     csv_mapping_fp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/csv_mapping__yh_edsr_m1_axial_val.csv"
     
     #
@@ -119,14 +122,16 @@ if __name__ == '__main__':
     # main process
     #
     # create destination dir
-    if os.path.isdir(dst_png_root_dp):
-        retv, retm = clear_dir(dst_png_root_dp)
-        if retv != 0:
-            exit(-1)
-    else:
-        retv, retm = create_dir(dst_png_root_dp)
-        if retv != 0:
-            exit(-1)
+    list_check_dst_dp = [dst_png_HR_root_dp, dst_png_LR_X2_root_dp]
+    for a_dp in list_check_dst_dp:
+        if os.path.isdir(a_dp):
+            retv, retm = clear_dir(a_dp)
+            if retv != 0:
+                exit(-1)
+        else:
+            retv, retm = create_dir(a_dp)
+            if retv != 0:
+                exit(-1)
     print("clean or create destination folder : OK")
     
     
@@ -153,11 +158,21 @@ if __name__ == '__main__':
         _, np_lw = apply_lung_window(np_hu_img)
         
         # save to png
+        x2_w = int(np_hu_img.shape[2]/2)
+        x2_h = int(np_hu_img.shape[1]/2)
         for sidx in range(np_hu_img.shape[0]):
             slice_fn = "{0}__{1}.png".format(a_dcm_fd, "%04d" % sidx)
-            slice_fp = os.path.join(tmp_dst_dp, slice_fn)
-            
+            slice_fp = os.path.join(dst_png_HR_root_dp, slice_fn)
             pil_img = Image.fromarray(np_lw[sidx, :, :])
             pil_img.save(slice_fp)
+            
+            # gen x2 png
+            slice_fn = "{0}__{1}x2.png".format(a_dcm_fd, "%04d" % sidx)
+            slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
+            resize_reso = (x2_w, x2_h)  # (w, h)
+            pil_img_x2 = pil_img.resize(resize_reso, resample=PIL.Image.BICUBIC)
+            pil_img_x2.save(slice_fp)
+            pil_img = None
+            pil_img_x2 = None
         
-    print("copy folder end")
+    print("convert dicom to png end")
