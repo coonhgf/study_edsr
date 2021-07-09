@@ -10,6 +10,7 @@ import datetime
 import tarfile
 import hashlib
 import SimpleITK as sitk
+import pandas
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
