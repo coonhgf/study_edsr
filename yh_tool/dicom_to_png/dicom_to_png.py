@@ -154,7 +154,7 @@ if __name__ == '__main__':
         
         # save to png
         for sidx in range(np_hu_img.shape[0]):
-            slice_fn = "{0}__{1}.png".format(a_dcm_fd, "%04d % sidx")
+            slice_fn = "{0}__{1}.png".format(a_dcm_fd, "%04d" % sidx)
             slice_fp = os.path.join(tmp_dst_dp, slice_fn)
             
             pil_img = Image.fromarray(np_lw[sidx, :, :])
