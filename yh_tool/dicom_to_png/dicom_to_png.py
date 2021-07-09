@@ -88,7 +88,7 @@ if __name__ == '__main__':
     # setting, usually modified
     #
     src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val_debug.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
     dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/yh_edsr_csh_axial_val_HR"
     dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/yh_edsr_csh_axial_val_LR_bicubic/X2"
     csv_mapping_fp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/csv_mapping__yh_edsr_csh_axial_val.csv"
@@ -137,6 +137,7 @@ if __name__ == '__main__':
     # read each dicom folder's dicom and convert to png
     # png naming is FolderName___001.png etc.
     for a_dcm_fd in list_src_dcm_folder:
+        print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
         
         # get seri_id by folder name
