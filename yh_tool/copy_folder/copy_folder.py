@@ -62,8 +62,8 @@ if __name__ == '__main__':
     # setting, usually modified
     #
     src_root_dp = "/media/sdc1/Linda/Dataset/CSH_Chest/5mm/dicom"
-    src_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
-    dst_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original"
+    src_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
+    dst_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
     
     
     #
