@@ -138,7 +138,6 @@ if __name__ == '__main__':
     # png naming is FolderName___001.png etc.
     for a_dcm_fd in list_src_dcm_folder:
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
-        tmp_dst_dp = dst_png_root_dp  # all dicom put together
         
         # get seri_id by folder name
         tmpv, seri_id = csv_mapping_get_seri_id_by_folder_name(csv_mapping_fp, a_dcm_fd)
