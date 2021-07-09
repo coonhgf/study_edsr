@@ -29,8 +29,6 @@ def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
         
         if str(np_mapping[idx][2]).strip() == folder_name:
             got_seri_id = np_mapping[idx][1]
-        if flag_mhd_int == 0:
-            seri_id = np_mapping[idx][1]
             break
         
     if got_seri_id == None:
