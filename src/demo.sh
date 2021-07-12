@@ -14,6 +14,9 @@
 
 # EDSR in the paper (x2)
 #python main.py --model EDSR --scale 2 --save edsr_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --reset
+# 37.209, med_exp1, dataset:yh_edsr_csh_axial(yh_sr_exp1)
+python main.py --model EDSR --data_train yh_sr_exp1 --scale 2 --patch_size 48 --save med_exp1_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --reset
+
 
 # EDSR in the paper (x3) - from EDSR (x2)
 #python main.py --model EDSR --scale 3 --save edsr_x3 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --reset --pre_train [pre-trained EDSR model dir]
@@ -48,7 +51,7 @@
 # 37.209, test med_exp1 val data, with auther's baseline edsr model
 #python main.py --data_test Demo --scale 2 --pre_train download --test_only --save_results --dir_demo "../test_med_exp1"
 # 37.209, test med_exp1 val data, with my trained baseline edsr model by DIV2K
-python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2_tr1/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp1"
+#python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2_tr1/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp1"
 
 
 

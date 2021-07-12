@@ -132,9 +132,9 @@ class SRData(data.Dataset):
         ### [y]
         print("[y] now in srdata's _set_filesystem()")
         
-        self.apath = os.path.join(dir_data, self.name)  # [y] "../../../../Eclipse_ws_data/edsr/dataset/DIV2K"
-        self.dir_hr = os.path.join(self.apath, 'HR')
-        self.dir_lr = os.path.join(self.apath, 'LR_bicubic')
+        self.apath = os.path.join(dir_data, self.name)  # [y] "../../../../Eclipse_ws_data/edsr/dataset/yh_sr_exp1"
+        self.dir_hr = os.path.join(self.apath, 'HR')  # [y] will be overrided
+        self.dir_lr = os.path.join(self.apath, 'LR_bicubic')  # [y] will be overrided
         if self.input_large: self.dir_lr += 'L'
         self.ext = ('.png', '.png')
         
