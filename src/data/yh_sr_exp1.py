@@ -22,7 +22,7 @@ class yh_sr_exp1(srdata.SRData):
         names_hr, names_lr = super(yh_sr_exp1, self)._scan()
         names_hr = glob.glob(os.path.join(self.dir_hr, '*' + self.ext[0]))
         names_hr.sort()
-        print("len of names_hr={0}".format(len()))
+        print("len of names_hr={0}".format(len(names_hr)))
         
         names_lr = []
         sub_name_lr = glob.glob(os.path.join(self.dir_lr, "{0}".format("X2"), '*' + self.ext[1]))
