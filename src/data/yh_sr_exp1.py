@@ -18,7 +18,7 @@ class yh_sr_exp1(srdata.SRData):
         ### [y]
         print("[y] start yh_sr_exp1's _scan()")
         
-        names_hr, names_lr = super(yh_sr_exp1, self)._scasn()
+        names_hr, names_lr = super(yh_sr_exp1, self)._scan()
         names_hr = glob.glob(os.path.join(self.dir_hr, '*' + self.ext[0]))
         names_hr.sort()
         print("len of names_hr={0}".format(len()))
