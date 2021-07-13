@@ -74,8 +74,16 @@ def augment(*args, hflip=True, rot=True):
         if hflip: img = img[:, ::-1, :]
         if vflip: img = img[::-1, :, :]
         if rot90: img = img.transpose(1, 0, 2)
-        
         return img
-
-    return [_augment(a) for a in args]
+    
+    def _augment_only_yx(img):
+        if hflip: img = img[:, ::-1]
+        if vflip: img = img[::-1, :]
+        if rot90: img = img.transpose(1, 0)    
+        return img
+    
+    if len(args[0].shape) == 3:
+        return [_augment(a) for a in args]
+    else:
+        return [_augment_only_yx(a) for a in args]
 
