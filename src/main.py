@@ -30,7 +30,7 @@ def main():
             loader = data.Data(args)
             _model = model.Model(args, checkpoint)
             ###
-            summary(_model.model, (1, 48, 48, 3))
+            summary(_model.model, (16, 48, 48, 3))
             exit(1)
             ###
             _loss = loss.Loss(args, checkpoint) if not args.test_only else None
