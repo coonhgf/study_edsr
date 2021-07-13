@@ -40,7 +40,7 @@ class Model(nn.Module):
         )
         print(self.model, file=ckp.log_file)
         ###
-        summary(self.model, (1, 48, 48, 3))
+        ###summary(self.model, (1, 48, 48, 3))
         
 
     def forward(self, x, idx_scale):
