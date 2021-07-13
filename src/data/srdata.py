@@ -87,7 +87,7 @@ class SRData(data.Dataset):
                 b = h.replace(self.apath, path_bin)
                 b = b.replace(self.ext[0], '.pt')
                 self.images_hr.append(b)
-                self._check_and_load(args.ext, h, b, verbose=True) 
+                self._check_and_load(args.ext, h, b, verbose=False) 
             for i, ll in enumerate(list_lr):
                 for l in ll:
                     b = l.replace(self.apath, path_bin)

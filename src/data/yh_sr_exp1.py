@@ -24,9 +24,11 @@ class yh_sr_exp1(srdata.SRData):
         print("len of names_hr={0}".format(len(names_hr)))
         
         names_lr = [[] for _ in self.scale]
-        for hr_fn in names_hr:
+        for hr_fp in names_hr:
+            hr_fn = os.path.basename(hr_fp)
+            hr_fn_no_ext = os.path.splitext(hr_fn)[0]
             for si, s in enumerate(self.scale):
-                lr_fn = "{0}x{1}{2}".format(hr_fn, s, self.ext[1])
+                lr_fn = "{0}x{1}{2}".format(hr_fn_no_ext, s, self.ext[1])
                 lr_fp = os.path.join(self.dir_lr, "{0}".format("X2"), lr_fn)
                 names_lr[si].append(lr_fp)
         print("len of names_lr={0}".format(len(names_lr)))
