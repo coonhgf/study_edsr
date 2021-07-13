@@ -6,7 +6,6 @@ import skimage.color as sc
 import torch
 
 def get_patch(*args, patch_size=96, scale=2, multi=False, input_large=False):
-    print("[y] debug, shape={0}".format(args[0].shape))
     ih, iw = args[0].shape[:2]
 
     if not input_large:
@@ -25,10 +24,19 @@ def get_patch(*args, patch_size=96, scale=2, multi=False, input_large=False):
     else:
         tx, ty = ix, iy
 
-    ret = [
-        args[0][iy:iy + ip, ix:ix + ip, :],
-        *[a[ty:ty + tp, tx:tx + tp, :] for a in args[1:]]
-    ]
+    if len(args[0].shape) == 3:
+        # [y] (y, x, c)
+        ret = [
+            args[0][iy:iy + ip, ix:ix + ip, :],
+            *[a[ty:ty + tp, tx:tx + tp, :] for a in args[1:]]
+        ]
+    else:
+        # [y] only (y, x)
+        ret = [
+            args[0][iy:iy + ip, ix:ix + ip],
+            *[a[ty:ty + tp, tx:tx + tp] for a in args[1:]]
+        ]
+        
 
     return ret
 
