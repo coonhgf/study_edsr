@@ -19,15 +19,16 @@ class yh_sr_exp1(srdata.SRData):
         ### [y]
         print("[y] start yh_sr_exp1's _scan()")
         
-        names_hr, names_lr = super(yh_sr_exp1, self)._scan()
         names_hr = glob.glob(os.path.join(self.dir_hr, '*' + self.ext[0]))
         names_hr.sort()
         print("len of names_hr={0}".format(len(names_hr)))
         
-        names_lr = []
-        sub_name_lr = glob.glob(os.path.join(self.dir_lr, "{0}".format("X2"), '*' + self.ext[1]))
-        sub_name_lr.sort()
-        names_lr.append(sub_name_lr)
+        names_lr = [[] for _ in self.scale]
+        for hr_fn in names_hr:
+            for si, s in enumerate(self.scale):
+                lr_fn = "{0}x{1}{2}".format(hr_fn, s, self.ext[1])
+                lr_fp = os.path.join(self.dir_lr, "{0}".format("X2"), lr_fn)
+                names_lr[si].append(lr_fp)
         print("len of names_lr={0}".format(len(names_lr)))
         print("len of names_lr[0]={0}".format(len(names_lr[0])))
         

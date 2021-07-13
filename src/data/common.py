@@ -9,18 +9,18 @@ def get_patch(*args, patch_size=96, scale=2, multi=False, input_large=False):
     ih, iw = args[0].shape[:2]
 
     if not input_large:
-        p = scale if multi else 1
-        tp = p * patch_size
-        ip = tp // scale
+        p = scale if multi else 1  # [y] 1    [y] 1
+        tp = p * patch_size  # [y] 1*48    [y] 1*96(baseline)    target.patch
+        ip = tp // scale  # [y] 48//2    [y] 96//2(baseline)    input.patch
     else:
         tp = patch_size
         ip = patch_size
 
-    ix = random.randrange(0, iw - ip + 1)
-    iy = random.randrange(0, ih - ip + 1)
+    ix = random.randrange(0, iw - ip + 1)  # [y] input.x(low reso)
+    iy = random.randrange(0, ih - ip + 1)  # [y] input.y(low reso)
 
     if not input_large:
-        tx, ty = scale * ix, scale * iy
+        tx, ty = scale * ix, scale * iy  # [y] target.x, target.y(high reso)
     else:
         tx, ty = ix, iy
 
