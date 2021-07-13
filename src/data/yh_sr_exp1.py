@@ -7,6 +7,8 @@ class yh_sr_exp1(srdata.SRData):
         ### [y]
         print("[y] run yh_sr_exp1's __init__()")
         
+        self.train = train
+        
         super(yh_sr_exp1, self).__init__(
             args, name=name, train=train, benchmark=benchmark
         )
@@ -43,10 +45,16 @@ class yh_sr_exp1(srdata.SRData):
         ### [y]
         print("[y] now in yh_sr_exp1's _set_filesystem()")
         
-        super(yh_sr_exp1, self)._set_filesystem(dir_data)
-        self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_train_HR')
-        self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_train_LR_bicubic')
-        if self.input_large: self.dir_lr += 'L'
+        if self.train:
+            super(yh_sr_exp1, self)._set_filesystem(dir_data)
+            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_train_HR')
+            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_train_LR_bicubic')
+            if self.input_large: self.dir_lr += 'L'
+        else:
+            super(yh_sr_exp1, self)._set_filesystem(dir_data)
+            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_val_HR')
+            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_val_LR_bicubic')
+            if self.input_large: self.dir_lr += 'L'
         
         ### [y]
         print("[y] self.apath={0}".format(self.apath))
