@@ -87,13 +87,13 @@ class SRData(data.Dataset):
                 b = h.replace(self.apath, path_bin)
                 b = b.replace(self.ext[0], '.pt')
                 self.images_hr.append(b)
-                self._check_and_load(args.ext, h, b, verbose=False) 
+                self._check_and_load(args.ext, h, b, verbose=True) 
             for i, ll in enumerate(list_lr):
                 for l in ll:
                     b = l.replace(self.apath, path_bin)
                     b = b.replace(self.ext[1], '.pt')
                     self.images_lr[i].append(b)
-                    self._check_and_load(args.ext, l, b, verbose=True) 
+                    self._check_and_load(args.ext, l, b, verbose=True)
         if train:
             n_patches = args.batch_size * args.test_every
             n_images = len(args.data_train) * len(self.images_hr)
@@ -177,6 +177,7 @@ class SRData(data.Dataset):
         idx = self._get_index(idx)
         f_hr = self.images_hr[idx]
         f_lr = self.images_lr[self.idx_scale][idx]
+        print("[y] debug, {0}".format(f_lr))
 
         filename, _ = os.path.splitext(os.path.basename(f_hr))
         if self.args.ext == 'img' or self.benchmark:
