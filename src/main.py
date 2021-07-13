@@ -28,8 +28,10 @@ def main():
         if checkpoint.ok:
             loader = data.Data(args)
             _model = model.Model(args, checkpoint)
-            ###[y]
-            _model.summary()
+            ###
+            _model.model.summary()
+            exit(1)
+            ###
             _loss = loss.Loss(args, checkpoint) if not args.test_only else None
             t = Trainer(args, loader, _model, _loss, checkpoint)
             while not t.terminate():
