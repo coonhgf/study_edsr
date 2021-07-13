@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.parallel as P
 import torch.utils.model_zoo
+from torchsummary import summary
 
 class Model(nn.Module):
     def __init__(self, args, ckp):
@@ -38,7 +39,9 @@ class Model(nn.Module):
             cpu=args.cpu
         )
         print(self.model, file=ckp.log_file)
-        #print(self.model.summary)
+        ###
+        summary(self.model, (1, 48, 48, 3))
+        
 
     def forward(self, x, idx_scale):
         self.idx_scale = idx_scale

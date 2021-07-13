@@ -16,7 +16,7 @@ import sys
 code_root_dp = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  ## src
 sys.path.append(os.path.join(code_root_dp, "model"))
 sys.path.append(os.path.join(code_root_dp, "data"))
-from torchsummary import summary
+#from torchsummary import summary
 
 def main():
     global model
@@ -30,8 +30,8 @@ def main():
             loader = data.Data(args)
             _model = model.Model(args, checkpoint)
             ###
-            summary(_model.model, (1, 2048, 1280, 3))
-            exit(1)
+            #summary(_model.model, (1, 2048, 1280, 3))
+            #exit(1)
             ###
             _loss = loss.Loss(args, checkpoint) if not args.test_only else None
             t = Trainer(args, loader, _model, _loss, checkpoint)
