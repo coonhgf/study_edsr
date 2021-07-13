@@ -18,7 +18,7 @@
 #python main.py --model EDSR --data_train yh_sr_exp1 --data_test yh_sr_exp1 --scale 2 --patch_size 48 --save med_exp1_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --reset
 #python main.py --model EDSR --data_train yh_sr_exp1 --data_test yh_sr_exp1 --scale 2 --patch_size 48 --save med_exp1_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 3 --batch_size 16 --reset
 # summary
-python main.py --model EDSR --data_train DIV2K --scale 2 --patch_size 96 --save yh_see_summary --reset 
+python main.py --model EDSR --data_train DIV2K --scale 2 --patch_size 96 --save yh_see_summary --reset --data_test DIV2K
 
 
 # EDSR in the paper (x3) - from EDSR (x2)
