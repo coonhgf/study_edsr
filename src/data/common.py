@@ -63,7 +63,7 @@ def np2Tensor(*args, rgb_range=255):
         tensor = torch.from_numpy(np_transpose).float()
         tensor.mul_(rgb_range / 255)
 
-        print("tensor={0}".format(tensor.size()))
+        ####print("tensor={0}".format(tensor.size()))
         return tensor
 
     return [_np2Tensor(a) for a in args]
