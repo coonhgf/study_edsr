@@ -20,6 +20,18 @@ class MeanShift(nn.Conv2d):
         self.bias.data = sign * rgb_range * torch.Tensor(rgb_mean) / std
         for p in self.parameters():
             p.requires_grad = False
+            
+class MeanShift_Ch1(nn.Conv2d):
+    def __init__(
+        self, rgb_range,
+        rgb_mean=(0.4288), rgb_std=(1.0), sign=-1):
+
+        super(MeanShift_Ch1, self).__init__(1, 1, kernel_size=1)
+        std = torch.Tensor(rgb_std)
+        self.weight.data = torch.eye(3).view(1, 3, 1, 1) / std.view(1)
+        self.bias.data = sign * rgb_range * torch.Tensor(rgb_mean) / std
+        for p in self.parameters():
+            p.requires_grad = False
 
 class BasicBlock(nn.Sequential):
     def __init__(

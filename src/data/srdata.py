@@ -155,7 +155,7 @@ class SRData(data.Dataset):
 
     def __getitem__(self, idx):
         lr, hr, filename = self._load_file(idx)
-        print("lr.shape={0}, hr.shape={1}, fn={2}".format(lr.shape, hr.shape, filename))
+        ####print("lr.shape={0}, hr.shape={1}, fn={2}".format(lr.shape, hr.shape, filename))
         
         pair = self.get_patch(lr, hr)
         pair = common.set_channel(*pair, n_channels=self.args.n_colors)
@@ -207,7 +207,7 @@ class SRData(data.Dataset):
             ih, iw = lr.shape[:2]
             hr = hr[0:ih * scale, 0:iw * scale]
         
-        print("get_patch(), lr.shape={0}, hr.shape={1}".format(lr.shape, hr.shape))
+        ####print("get_patch(), lr.shape={0}, hr.shape={1}".format(lr.shape, hr.shape))
         return lr, hr
 
     def set_scale(self, idx_scale):

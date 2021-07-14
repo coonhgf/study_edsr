@@ -44,7 +44,7 @@ def set_channel(*args, n_channels=3):
     def _set_channel(img):
         if img.ndim == 2:
             img = np.expand_dims(img, axis=2)
-            print("img.ndim == 2, now, img.shape={0}".format(img.shape))
+            ####print("img.ndim == 2, now, img.shape={0}".format(img.shape))
 
         c = img.shape[2]
         if n_channels == 1 and c == 3:
@@ -52,7 +52,7 @@ def set_channel(*args, n_channels=3):
         elif n_channels == 3 and c == 1:
             img = np.concatenate([img] * n_channels, 2)
 
-        print("at end set_channel(), img.shape={0}".format(img.shape))
+        ####print("at end set_channel(), img.shape={0}".format(img.shape))
         return img
 
     return [_set_channel(a) for a in args]
