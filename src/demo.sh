@@ -55,7 +55,7 @@
 # 37.209, test med_exp1 val data, with my trained baseline edsr model by DIV2K
 #python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_edsr_baseline_x2_tr1/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp1"
 # 37.209, test with med_exp1 val data, with mdf 1ch code model
-python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp1_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp1" --n_colors 1 --patch_size 48
+python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp1_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp1" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --patch_size 48
 
 
 
