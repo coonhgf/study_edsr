@@ -9,7 +9,7 @@ import time
 import datetime
 import tarfile
 import hashlib
-import SimpleITK as sitk
+#import SimpleITK as sitk
 import pandas
 from PIL import Image
 
