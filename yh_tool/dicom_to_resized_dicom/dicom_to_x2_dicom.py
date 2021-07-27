@@ -155,6 +155,7 @@ if __name__ == '__main__':
         
         # process 
         for sidx, tmp_dcm_fp in enumerate(list_files):
+            print("now dcm fp : {0}".format(tmp_dcm_fp))
             dcm_data = dcmread(tmp_dcm_fp)
             
             # modify seri_id, seri_id.988
@@ -165,19 +166,20 @@ if __name__ == '__main__':
             #dcm_data[0x28, 0x11].value = 256  # columns => can not work
             
             dcm_img = dcm_data.pixel_array.astype(np.float32)
-            print("the_dcm_img={0}".format(dcm_img.shape))
+            print("shape of the_dcm_img={0}".format(dcm_img.shape))
             
             # resize image
             resize_factor = [0.5, 0.5]  # 512 to 256
             #resize_factor = 0.5
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
+            print("[124:128, 124:128]")
             print("dcm_img_x2:{0}".format(dcm_img_x2[124:128, 124:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
             dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
             dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -1024, 3071)
-            print("dcm_img_x2_clip:{0}\n\n".format(dcm_img_x2_clip[124:128, 124:128]))
+            print("dcm_img_x2_clip:{0}".format(dcm_img_x2_clip[124:128, 124:128]))
             dcm_data.PixelData = dcm_img_x2_clip.tostring()
-            print("dcm_img_x2_clip={0}".format(dcm_img_x2_clip.shape))
+            print("shape of dcm_img_x2_clip={0}\n\n".format(dcm_img_x2_clip.shape))
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_clip.shape
             
             # save 
