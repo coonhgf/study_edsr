@@ -160,7 +160,7 @@ if __name__ == '__main__':
             # modify seri_id, seri_id.988
             seri_id = dcm_data.SeriesInstanceUID
             #dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "988")
-            dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "988")
+            dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_mdf")
             #dcm_data[0x28, 0x10].value = 256  # rows => can not work
             #dcm_data[0x28, 0x11].value = 256  # columns => can not work
             
