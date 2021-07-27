@@ -167,7 +167,7 @@ if __name__ == '__main__':
             print("the_dcm_img={0}".format(dcm_img.shape))
             
             # resize image
-            resize_factor = (0.5, 0.5)  # 512 to 256
+            resize_factor = [0.5, 0.5]  # 512 to 256
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
             print("dcm_img_x2:{0}\n\n".format(dcm_img_x2[124:128, 124:128]))
             dcm_data.pixel_array = dcm_img_x2
