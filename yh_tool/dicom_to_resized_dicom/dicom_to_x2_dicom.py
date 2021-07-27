@@ -190,11 +190,12 @@ if __name__ == '__main__':
             dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -1024, 3071)
             print("dcm_img_x2_clip:{0}".format(dcm_img_x2_clip[124:128, 124:128]))
             dcm_data.PixelData = dcm_img_x2_clip.tostring()
-            print("shape of dcm_img_x2_clip={0}\n\n".format(dcm_img_x2_clip.shape))
+            print("shape of dcm_img_x2_clip={0}".format(dcm_img_x2_clip.shape))
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_clip.shape
             
             # save 
             slice_fn = "{0}__{1}x2.dcm".format(a_dcm_fd, "%04d" % sidx)
+            print("saved x2 filename={0}\n\n".format(slice_fn))
             slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
             dcm_data.save_as(slice_fp)
         
