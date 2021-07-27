@@ -181,5 +181,6 @@ if __name__ == '__main__':
     a_mean_of_all = sum(mean_per_scan)/len(mean_per_scan)
     
     print("mean_per_scan={0}".format(mean_per_scan))
+    print("len of mean_per_scan={0}".format(len(mean_per_scan)))
     print("a_mean_of_all={0}".format(a_mean_of_all))
     print("calc hu mean end")
