@@ -125,19 +125,6 @@ if __name__ == '__main__':
     #
     # main process
     #
-    # create destination dir
-    list_check_dst_dp = [dst_png_HR_root_dp, dst_png_LR_X2_root_dp]
-    for a_dp in list_check_dst_dp:
-        if os.path.isdir(a_dp):
-            retv, retm = clear_dir(a_dp)
-            if retv != 0:
-                exit(-1)
-        else:
-            retv, retm = create_dir(a_dp)
-            if retv != 0:
-                exit(-1)
-    print("clean or create destination folder : OK")
-    
     
     # read each dicom folder's dicom and convert to png
     # png naming is FolderName___001.png etc.
@@ -147,7 +134,7 @@ if __name__ == '__main__':
     hu_min_exception_cnt = 0
     hu_exception_fn = []
     for a_dcm_fd in list_src_dcm_folder:
-        print("processing : {0}".format(a_dcm_fd))
+        #print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
         
         # list files in this folder
