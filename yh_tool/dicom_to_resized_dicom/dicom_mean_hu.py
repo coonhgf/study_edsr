@@ -183,4 +183,14 @@ if __name__ == '__main__':
     print("mean_per_scan={0}".format(mean_per_scan))
     print("len of mean_per_scan={0}".format(len(mean_per_scan)))
     print("a_mean_of_all={0}".format(a_mean_of_all))
+    
+    
+    # shift from -1024~3071 to 0~4095
+    print("shift hu from -1024~3071 to 0~4095")
+    mean_with_shift = a_mean_of_all + 1024
+    norm_mean_with_shift = mean_with_shift / 4095
+    print("mean_with_shift={0}".format(mean_with_shift))
+    print("norm_mean_with_shift={0}".format(norm_mean_with_shift))
+    
+    print("")
     print("calc hu mean end")
