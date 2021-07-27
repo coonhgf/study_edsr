@@ -93,8 +93,8 @@ if __name__ == '__main__':
     #
     src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
     src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val_debug.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
-    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/yh_edsr_csh_axial_exp2_val_HR"
-    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_png/yh_edsr_csh_axial_exp2_val_LR_bicubic/X2"
+    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom/yh_edsr_csh_axial_exp2_val_HR"
+    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom/yh_edsr_csh_axial_exp2_val_LR_bicubic/X2"
     csv_mapping_fp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/csv_mapping__yh_edsr_csh_axial_train.csv"
     
     #
@@ -150,19 +150,31 @@ if __name__ == '__main__':
             tmp_fp = os.path.join(tmp_src_dp, tmp_fn)
             if os.path.isfile(tmp_fp):
                 list_files.append(tmp_fp)
+        list_files.sort()
         
-        for tmp_dcm_fp in list_files:
+        # process 
+        for sidx, tmp_dcm_fp in enumerate(list_files):
             dcm_data = dcmread(tmp_dcm_fp)
             
             # modify seri_id, seri_id.988
             seri_id = dcm_data[0x20, 0x0e]
-            dcm_data[0x10,0x10].value = "{0}.{1}".format(seri_id, "988")
+            dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "988")
+            dcm_data[0x28, 0x10].value = 256  # rows
+            dcm_data[0x28, 0x11].value = 256  # columns
             
             dcm_img = dcm_data.pixel_array.astype(np.float16)
             print("the_dcm_img={0}".format(dcm_img.shape))
-            exit(1)
             
-        
+            # resize image
+            resize_factor = (0.5, 0.5)  # 512 to 256
+            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
+            print("dcm_img_x2:{0}\n\n".format(dcm_img_x2[124:128, 124:128]))
+            dcm_data.pixel_array = dcm_img_x2
+            
+            # save 
+            slice_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
+            slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
+            dcm_data.save_as(slice_fp)
         
         
     print("convert dicom to png end")
