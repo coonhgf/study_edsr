@@ -17,6 +17,7 @@ from PIL import Image
 #import pydicom
 from pydicom import dcmread
 from scipy.ndimage.interpolation import zoom
+import shutil
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
@@ -146,22 +147,33 @@ if __name__ == '__main__':
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
         
         # list files in this folder
-        list_files = []
+        list_filename = []
         for tmp_fn in os.listdir(tmp_src_dp):
-            tmp_fp = os.path.join(tmp_src_dp, tmp_fn)
-            if os.path.isfile(tmp_fp):
-                list_files.append(tmp_fp)
-        list_files.sort()
+            tmp = os.path.join(tmp_src_dp, tmp_fn)
+            if os.path.isfile(tmp):
+                list_filename.append(tmp_fn)
+        list_filename.sort()
         
         # process 
-        for sidx, tmp_dcm_fp in enumerate(list_files):
+        for sidx, tmp_dcm_fn in enumerate(list_filename):
+            tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             print("now dcm fp : {0}".format(tmp_dcm_fp))
+            
+            # HR
+            # just copy dicom
+            dst_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
+            dst_fp = os.path.join(dst_png_LR_X2_root_dp, dst_fn)
+            shutil.copyfile(tmp_dcm_fp, dst_fp)
+            
+            #
+            # LR of X2
+            #
             dcm_data = dcmread(tmp_dcm_fp)
             
-            # modify seri_id, seri_id.988
+            # modify seri_id, append ".yh_mdf
             seri_id = dcm_data.SeriesInstanceUID
-            #dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "988")
             dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_mdf")
+            #dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "yh_mdf")  # => can not work
             #dcm_data[0x28, 0x10].value = 256  # rows => can not work
             #dcm_data[0x28, 0x11].value = 256  # columns => can not work
             
@@ -170,7 +182,6 @@ if __name__ == '__main__':
             
             # resize image
             resize_factor = [0.5, 0.5]  # 512 to 256
-            #resize_factor = 0.5
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
             print("[124:128, 124:128]")
             print("dcm_img_x2:{0}".format(dcm_img_x2[124:128, 124:128]))
@@ -183,7 +194,7 @@ if __name__ == '__main__':
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_clip.shape
             
             # save 
-            slice_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
+            slice_fn = "{0}__{1}x2.dcm".format(a_dcm_fd, "%04d" % sidx)
             slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
             dcm_data.save_as(slice_fp)
         
