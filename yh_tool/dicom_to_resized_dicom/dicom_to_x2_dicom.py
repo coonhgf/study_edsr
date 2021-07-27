@@ -171,7 +171,9 @@ if __name__ == '__main__':
             #resize_factor = 0.5
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
             print("dcm_img_x2:{0}\n\n".format(dcm_img_x2[124:128, 124:128]))
-            dcm_data.pixel_array.value = dcm_img_x2
+            dcm_img_x2_f16 = dcm_img_x2.astype(np.float16)
+            dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
+            dcm_data.PixelData = dcm_img_x2_i16.tostring()
             
             # save 
             slice_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
