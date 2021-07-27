@@ -162,7 +162,7 @@ if __name__ == '__main__':
             # HR
             # just copy dicom
             dst_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
-            dst_fp = os.path.join(dst_png_LR_X2_root_dp, dst_fn)
+            dst_fp = os.path.join(dst_png_HR_root_dp, dst_fn)
             shutil.copyfile(tmp_dcm_fp, dst_fp)
             
             #
