@@ -143,6 +143,9 @@ if __name__ == '__main__':
     # png naming is FolderName___001.png etc.
     mean_per_scan = []  # a list
     mean_per_slice = []  # list of list
+    hu_max_exception_cnt = 0
+    hu_min_exception_cnt = 0
+    hu_exception_fn = []
     for a_dcm_fd in list_src_dcm_folder:
         print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
@@ -169,6 +172,14 @@ if __name__ == '__main__':
             # calc mean of this slice
             a_mean_of_slice = np.mean(dcm_img)
             tmp_mean_slice.append(a_mean_of_slice)
+            tmp_max_val = np.max(dcm_img)
+            tmp_min_val = np.min(dcm_img)
+            if tmp_max_val > 3071.0:
+                hu_max_exception_cnt += 1
+                hu_exception_fn.append(tmp_dcm_fn)
+            if tmp_min_val < -1024.0:
+                hu_min_exception_cnt += 1
+                hu_exception_fn.append(tmp_dcm_fn)
         
         
         # save the number
@@ -183,7 +194,7 @@ if __name__ == '__main__':
     print("mean_per_scan={0}".format(mean_per_scan))
     print("len of mean_per_scan={0}".format(len(mean_per_scan)))
     print("a_mean_of_all={0}".format(a_mean_of_all))
-    
+    print("")
     
     # shift from -1024~3071 to 0~4095
     print("shift hu from -1024~3071 to 0~4095")
@@ -191,6 +202,12 @@ if __name__ == '__main__':
     norm_mean_with_shift = mean_with_shift / 4095
     print("mean_with_shift={0}".format(mean_with_shift))
     print("norm_mean_with_shift={0}".format(norm_mean_with_shift))
-    
     print("")
+    
+    # hu value exception checking
+    print("hu_exception_fn={0}".format(hu_exception_fn))
+    print("hu_max_exception_cnt={0}".format(hu_max_exception_cnt))
+    print("hu_min_exception_cnt={0}".format(hu_min_exception_cnt))
+    print("")
+    
     print("calc hu mean end")

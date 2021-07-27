@@ -70,9 +70,12 @@ def np2Tensor(*args, rgb_range=255):
 
 def np2Tensor_dicom(*args, rgb_range=3071):
     def _np2Tensor(img):
-        np_transpose = np.ascontiguousarray(img.transpose((2, 0, 1)))
+        # [y] shift from -1024~3071 to 0~4095
+        img_shift = img + 1024
+        
+        np_transpose = np.ascontiguousarray(img_shift.transpose((2, 0, 1)))
         tensor = torch.from_numpy(np_transpose).float()
-        tensor.mul_(rgb_range / 4096)
+        tensor.mul_(rgb_range / 4095)
 
         ####print("tensor={0}".format(tensor.size()))
         return tensor
