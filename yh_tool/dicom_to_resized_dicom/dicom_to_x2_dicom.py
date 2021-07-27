@@ -163,12 +163,12 @@ if __name__ == '__main__':
             dcm_data[0x28, 0x10].value = 256  # rows
             dcm_data[0x28, 0x11].value = 256  # columns
             
-            dcm_img = dcm_data.pixel_array.astype(np.float16)
+            dcm_img = dcm_data.pixel_array.astype(np.float32)
             print("the_dcm_img={0}".format(dcm_img.shape))
             
             # resize image
-            #resize_factor = [0.5, 0.5]  # 512 to 256
-            resize_factor = 0.5
+            resize_factor = [0.5, 0.5]  # 512 to 256
+            #resize_factor = 0.5
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
             print("dcm_img_x2:{0}\n\n".format(dcm_img_x2[124:128, 124:128]))
             dcm_data.pixel_array = dcm_img_x2
