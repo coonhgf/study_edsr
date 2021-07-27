@@ -16,6 +16,7 @@ from PIL import Image
 ###
 #import pydicom
 from pydicom import dcmread
+from scipy.ndimage.interpolation import zoom
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
