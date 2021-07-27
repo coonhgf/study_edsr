@@ -156,7 +156,7 @@ if __name__ == '__main__':
             
             # modify seri_id, seri_id.988
             seri_id = dcm_data[0x20, 0x0e]
-            dcm_data[0x10,0x10] = "{0}.{1}".format(seri_id, "988")
+            dcm_data[0x10,0x10].value = "{0}.{1}".format(seri_id, "988")
             
             dcm_img = dcm_data.pixel_array.astype(np.float16)
             print("the_dcm_img={0}".format(dcm_img.shape))
