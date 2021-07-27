@@ -79,7 +79,7 @@ def apply_lung_window(np_hu_img):
 
 
 if __name__ == '__main__':
-    print("convert dicom to resized dicom start!")
+    print("calc hu mean start!")
     #
     # read dicom by seri_id(will need csv mapping file), 
     # => save each slice dicom to png, filename will be folder_name__4digits_number.png, as HighResolution
@@ -141,6 +141,8 @@ if __name__ == '__main__':
     
     # read each dicom folder's dicom and convert to png
     # png naming is FolderName___001.png etc.
+    mean_per_scan = []  # a list
+    mean_per_slice = []  # list of list
     for a_dcm_fd in list_src_dcm_folder:
         print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
@@ -154,48 +156,30 @@ if __name__ == '__main__':
         list_filename.sort()
         
         # process
+        tmp_mean_slice = []
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             print("now dcm fp : {0}".format(tmp_dcm_fp))
             
             # HR
-            # just copy dicom
-            dst_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
-            dst_fp = os.path.join(dst_png_HR_root_dp, dst_fn)
-            shutil.copyfile(tmp_dcm_fp, dst_fp)
-            
-            #
-            # LR of X2
-            #
+            # read hu and calc mean
             dcm_data = dcmread(tmp_dcm_fp)
+            dcm_img = dcm_data.pixel_array.astype(np.float64)
             
-            # modify seri_id, append ".yh_mdf
-            seri_id = dcm_data.SeriesInstanceUID
-            dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_mdf")
-            #dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "yh_mdf")  # => can not work
-            #dcm_data[0x28, 0x10].value = 256  # rows => can not work
-            #dcm_data[0x28, 0x11].value = 256  # columns => can not work
-            
-            dcm_img = dcm_data.pixel_array.astype(np.float32)
-            print("shape of the_dcm_img={0}".format(dcm_img.shape))
-            
-            # resize image
-            resize_factor = [0.5, 0.5]  # 512 to 256
-            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
-            print("[124:128, 124:128]")
-            print("dcm_img_x2:{0}".format(dcm_img_x2[124:128, 124:128]))
-            dcm_img_x2 = np.round(dcm_img_x2, 0)
-            dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
-            dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -1024, 3071)
-            print("dcm_img_x2_clip:{0}".format(dcm_img_x2_clip[124:128, 124:128]))
-            dcm_data.PixelData = dcm_img_x2_clip.tostring()
-            print("shape of dcm_img_x2_clip={0}".format(dcm_img_x2_clip.shape))
-            dcm_data.Rows, dcm_data.Columns = dcm_img_x2_clip.shape
-            
-            # save 
-            slice_fn = "{0}__{1}x2.dcm".format(a_dcm_fd, "%04d" % sidx)
-            print("saved x2 filename={0}\n\n".format(slice_fn))
-            slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
-            dcm_data.save_as(slice_fp)
+            # calc mean of this slice
+            a_mean_of_slice = np.mean(dcm_img)
+            tmp_mean_slice.append(a_mean_of_slice)
         
-    print("convert dicom to resized dicom end")
+        
+        # save the number
+        mean_per_slice.append(tmp_mean_slice)
+        a_mean_of_scan = sum(tmp_mean_slice)/len(tmp_mean_slice)
+        mean_per_scan.append(a_mean_of_scan)
+        
+        
+    # calc all scan's mean and show
+    a_mean_of_all = sum(mean_per_scan)/len(mean_per_scan)
+    
+    print("mean_per_scan={0}".format(mean_per_scan))
+    print("a_mean_of_all={0}".format(a_mean_of_all))
+    print("calc hu mean end")

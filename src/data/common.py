@@ -68,6 +68,17 @@ def np2Tensor(*args, rgb_range=255):
 
     return [_np2Tensor(a) for a in args]
 
+def np2Tensor_dicom(*args, rgb_range=3071):
+    def _np2Tensor(img):
+        np_transpose = np.ascontiguousarray(img.transpose((2, 0, 1)))
+        tensor = torch.from_numpy(np_transpose).float()
+        tensor.mul_(rgb_range / 4096)
+
+        ####print("tensor={0}".format(tensor.size()))
+        return tensor
+
+    return [_np2Tensor(a) for a in args]
+
 def augment(*args, hflip=True, rot=True):
     hflip = hflip and random.random() < 0.5
     vflip = rot and random.random() < 0.5
