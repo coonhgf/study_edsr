@@ -160,8 +160,8 @@ if __name__ == '__main__':
             # modify seri_id, seri_id.988
             seri_id = dcm_data[0x20, 0x0e]
             dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "988")
-            dcm_data[0x28, 0x10].value = 256  # rows
-            dcm_data[0x28, 0x11].value = 256  # columns
+            #dcm_data[0x28, 0x10].value = 256  # rows
+            #dcm_data[0x28, 0x11].value = 256  # columns
             
             dcm_img = dcm_data.pixel_array.astype(np.float32)
             print("the_dcm_img={0}".format(dcm_img.shape))
@@ -176,6 +176,8 @@ if __name__ == '__main__':
             dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -1024, 3071)
             print("dcm_img_x2_clip:{0}\n\n".format(dcm_img_x2_clip[124:128, 124:128]))
             dcm_data.PixelData = dcm_img_x2_clip.tostring()
+            print("dcm_img_x2_clip={0}".format(dcm_img_x2_clip.shape))
+            dcm_data.Rows, dcm_data.Columns = dcm_img_x2_clip.shape
             
             # save 
             slice_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
