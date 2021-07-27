@@ -158,10 +158,11 @@ if __name__ == '__main__':
             dcm_data = dcmread(tmp_dcm_fp)
             
             # modify seri_id, seri_id.988
-            seri_id = dcm_data[0x20, 0x0e]
-            dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "988")
-            #dcm_data[0x28, 0x10].value = 256  # rows
-            #dcm_data[0x28, 0x11].value = 256  # columns
+            seri_id = dcm_data.SeriesInstanceUID
+            #dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "988")
+            dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "988")
+            #dcm_data[0x28, 0x10].value = 256  # rows => can not work
+            #dcm_data[0x28, 0x11].value = 256  # columns => can not work
             
             dcm_img = dcm_data.pixel_array.astype(np.float32)
             print("the_dcm_img={0}".format(dcm_img.shape))
