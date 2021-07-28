@@ -37,7 +37,7 @@ class MeanShift_Ch1(nn.Conv2d):
 class MeanShift_Ch1_dicom(nn.Conv2d):
     def __init__(
         self, rgb_range,
-        rgb_mean=[0.216716], rgb_std=[1.0], sign=-1):
+        rgb_mean=[0.3734036], rgb_std=[1.0], sign=-1):
 
         super(MeanShift_Ch1_dicom, self).__init__(1, 1, kernel_size=1)
         std = torch.Tensor(rgb_std)

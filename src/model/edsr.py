@@ -32,9 +32,16 @@ class EDSR(nn.Module):
         if args.n_colors == 3:
             self.sub_mean = common.MeanShift(args.rgb_range)
             self.add_mean = common.MeanShift(args.rgb_range, sign=1)
-        else:
+        elif args.n_colors == 1 and args.rgb_range == 5119:
+            print("dicom's common.MeanShift")
+            self.sub_mean = common.MeanShift_Ch1_dicom(args.rgb_range)
+            self.add_mean = common.MeanShift_Ch1_dicom(args.rgb_range, sign=1)
+        elif args.n_colors == 1:
             self.sub_mean = common.MeanShift_Ch1(args.rgb_range)
             self.add_mean = common.MeanShift_Ch1(args.rgb_range, sign=1)
+        else:
+            print("not valid, quit now")
+            exit(-1)
 
         # define head module
         m_head = [conv(args.n_colors, n_feats, kernel_size)]
