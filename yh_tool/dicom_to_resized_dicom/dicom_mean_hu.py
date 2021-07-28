@@ -18,6 +18,7 @@ from PIL import Image
 from pydicom import dcmread
 from scipy.ndimage.interpolation import zoom
 import shutil
+from collections import Counter
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
@@ -132,9 +133,10 @@ if __name__ == '__main__':
     mean_per_slice = []  # list of list
     hu_max_exception_cnt = 0
     hu_min_exception_cnt = 0
-    hu_exception_fn = []
+    list_hu_min = []  # -1025 start add to list
+    list_hu_max = []  # 3072 start add to list
     for a_dcm_fd in list_src_dcm_folder:
-        #print("processing : {0}".format(a_dcm_fd))
+        print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
         
         # list files in this folder
@@ -149,7 +151,7 @@ if __name__ == '__main__':
         tmp_mean_slice = []
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
-            print("now dcm fp : {0}".format(tmp_dcm_fp))
+            #print("now dcm fp : {0}".format(tmp_dcm_fp))
             
             # HR
             # read hu and calc mean
@@ -163,10 +165,10 @@ if __name__ == '__main__':
             tmp_min_val = np.min(dcm_img)
             if tmp_max_val > 3071.0:
                 hu_max_exception_cnt += 1
-                hu_exception_fn.append(tmp_dcm_fn)
+                list_hu_max.append(tmp_max_val)
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
-                hu_exception_fn.append(tmp_dcm_fn)
+                list_hu_min.append(tmp_min_val)
         
         
         # save the number
@@ -192,9 +194,14 @@ if __name__ == '__main__':
     print("")
     
     # hu value exception checking
-    print("hu_exception_fn={0}".format(hu_exception_fn))
+    dict_hu_max_counter = Counter(list_hu_max)
+    dict_hu_min_counter = Counter(list_hu_min)
+    cvt_sorted_list_hu_max = sorted(dict_hu_max_counter.items(), key=lambda x:x[1], reverse=True)
+    cvt_sorted_list_hu_min = sorted(dict_hu_min_counter.items(), key=lambda x:x[1])
     print("hu_max_exception_cnt={0}".format(hu_max_exception_cnt))
     print("hu_min_exception_cnt={0}".format(hu_min_exception_cnt))
+    print("top 5 of cvt_sorted_list_hu_max=\n{0}".format(cvt_sorted_list_hu_max[0:5]))
+    print("top 5 of cvt_sorted_list_hu_min=\n{0}".format(cvt_sorted_list_hu_min[0:5]))
     print("")
     
     print("calc hu mean end")
