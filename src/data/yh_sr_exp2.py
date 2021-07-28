@@ -3,7 +3,7 @@ from data import srdata_exp2
 import glob
 
 
-class yh_sr_exp2(srdata.SRData):
+class yh_sr_exp2(srdata_exp2.SRData):
     def __init__(self, args, name='yh_sr_exp1', train=True, benchmark=False):
         ### [y]
         print("[y] run yh_sr_exp2's __init__()")
