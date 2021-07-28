@@ -188,9 +188,9 @@ if __name__ == '__main__':
     # shift from -1024~3071 to 0~4095
     ###print("shift hu from -1024~3071 to 0~4095")
     # =>
-    print("shift hu from -2048~3071 to 0~5119")
+    print("assume hu range is -2048~3071, now shift to 0~5119")
     mean_with_shift = a_mean_of_all + 2048
-    norm_mean_with_shift = mean_with_shift / 5120
+    norm_mean_with_shift = mean_with_shift / 5119
     print("mean_with_shift={0}".format(mean_with_shift))
     print("norm_mean_with_shift={0}".format(norm_mean_with_shift))
     print("")

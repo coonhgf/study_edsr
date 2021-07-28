@@ -155,7 +155,7 @@ class SRData(data.Dataset):
                 # =>
                 dcm_data = dcmread(img)
                 dcm_img = dcm_data.pixel_array.astype(np.float32)
-                dcm_img_clip = np.clip(dcm_img, -1024, 3071)
+                dcm_img_clip = np.clip(dcm_img, -2048, 3071)
                 pickle.dump(dcm_img_clip, _f)
                 
 
