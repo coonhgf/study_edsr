@@ -35,14 +35,18 @@ def main():
             ###
             _loss = loss.Loss(args, checkpoint) if not args.test_only else None
             t = Trainer(args, loader, _model, _loss, checkpoint)
+            
+            tmp_ep_idx = 0
             while not t.terminate():
                 ### [y]
                 print("[y] going to call t.train()")
                 t.train()
                 
-                ### [y]
-                print("[y] going to call t.test()")
-                t.test()
+                tmp_ep_idx += 1
+                if tmp_ep_idx % 10 == 0:                
+                    ### [y]
+                    print("[y] going to call t.test()")
+                    t.test()
 
             checkpoint.done()
 
