@@ -10,7 +10,7 @@ class yh_sr_exp2(srdata_exp2.SRData):
         
         self.train = train
         
-        super(yh_sr_exp1, self).__init__(
+        super(yh_sr_exp2, self).__init__(
             args, name=name, train=train, benchmark=benchmark
         )
         
