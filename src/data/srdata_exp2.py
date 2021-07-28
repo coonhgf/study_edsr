@@ -136,7 +136,7 @@ class SRData(data.Dataset):
         self.dir_hr = os.path.join(self.apath, 'HR')  # [y] will be overrided
         self.dir_lr = os.path.join(self.apath, 'LR_bicubic')  # [y] will be overrided
         if self.input_large: self.dir_lr += 'L'
-        self.ext = ('.png', '.png')
+        self.ext = ('.dcm', '.dcm')
         
         ### [y]
         print("[y]srdata, self.apath={0}".format(self.apath))
