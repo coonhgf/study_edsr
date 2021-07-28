@@ -4,7 +4,7 @@ import glob
 
 
 class yh_sr_exp2(srdata_exp2.SRData):
-    def __init__(self, args, name='yh_sr_exp1', train=True, benchmark=False):
+    def __init__(self, args, name='yh_sr_exp2', train=True, benchmark=False):
         ### [y]
         print("[y] run yh_sr_exp2's __init__()")
         
@@ -47,12 +47,12 @@ class yh_sr_exp2(srdata_exp2.SRData):
         print("[y] now in yh_sr_exp2's _set_filesystem()")
         
         if self.train:
-            super(yh_sr_exp1, self)._set_filesystem(dir_data)
+            super(yh_sr_exp2, self)._set_filesystem(dir_data)
             self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_train_HR')
             self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_train_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
         else:
-            super(yh_sr_exp1, self)._set_filesystem(dir_data)
+            super(yh_sr_exp2, self)._set_filesystem(dir_data)
             self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_val_HR')
             self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_val_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
