@@ -42,11 +42,15 @@ def main():
                 print("[y] going to call t.train()")
                 t.train()
                 
-                tmp_ep_idx += 1
-                if tmp_ep_idx % 10 == 0:                
-                    ### [y]
-                    print("[y] going to call t.test()")
-                    t.test()
+                ## [y]
+                print("[y] going to call t.test()")
+                t.test()
+                # => want to, but something need mdf too
+                #tmp_ep_idx += 1
+                #if tmp_ep_idx % 10 == 0:                
+                #    ### [y]
+                #    print("[y] going to call t.test()")
+                #    t.test()
 
             checkpoint.done()
 
