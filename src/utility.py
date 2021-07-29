@@ -310,12 +310,12 @@ def calc_psnr_dicom(sr, hr, scale, rgb_range=5119, dataset=None):
     #
     # my psnr
     #
-    yh_diff = (sr - hr)
-    yh_valid = yh_diff[..., shave:-shave, shave:-shave]
-    yh_mse = yh_valid.pow(2).mean()
-    yh_psnr = 10 * math.log10((5119**2)/yh_mse)
+    #yh_diff = (sr - hr)
+    #yh_valid = yh_diff[..., shave:-shave, shave:-shave]
+    #yh_mse = yh_valid.pow(2).mean()
+    #yh_psnr = 10 * math.log10((5119**2)/yh_mse)
     
-    print("ori psnr={0}, yh_psnr={1}".format(ori_code_psnr, yh_psnr))
+    #print("ori psnr={0}, yh_psnr={1}".format(ori_code_psnr, yh_psnr))
     return ori_code_psnr
 
 def make_optimizer(args, target):
