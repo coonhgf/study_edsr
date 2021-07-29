@@ -300,7 +300,7 @@ def calc_psnr_dicom(sr, hr, scale, rgb_range=5119, dataset=None):
             convert = diff.new_tensor(gray_coeffs).view(1, 3, 1, 1) / 256
             diff = diff.mul(convert).sum(dim=1)
     else:
-        print("calc psnr, in else part")
+        #print("calc psnr, in else part")
         shave = scale + 6
 
     valid = diff[..., shave:-shave, shave:-shave]
