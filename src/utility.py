@@ -21,6 +21,9 @@ import torch.optim.lr_scheduler as lrs
 ### [y]
 import logging
 import traceback
+from pydicom import dcmread
+
+
 def log_initialize(log_name, log_dp, flag_by_day=False):
     # exam log_dp exist
     if not os.path.isdir(log_dp):
@@ -237,14 +240,14 @@ class checkpoint():
                 
     def save_results_dicom(self, dataset, filename, save_list, scale, HR_dp):
         if self.args.save_results:
+            ori_dcm_fp = os.path.join(HR_dp, "{0}.dcm".format(filename))
+            print("ori_dcm_fp={0}".format(ori_dcm_fp))
+            
             filename = self.get_path(
                 'results-{}'.format(dataset.dataset.name),
                 '{}_x{}_'.format(filename, scale)
             )
             
-            ori_dcm_fp = os.path.join(HR_dp, "{0}.dcm".format(filename))
-            print("ori_dcm_fp={0}".format(ori_dcm_fp))
-
             postfix = ('SR', 'LR', 'HR')
             for v, p in zip(save_list, postfix):
                 normalized = v[0].mul(5119 / self.args.rgb_range)
