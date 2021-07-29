@@ -103,17 +103,30 @@ class Trainer():
                 for lr, hr, filename in tqdm(d, ncols=80):
                     lr, hr = self.prepare(lr, hr)
                     sr = self.model(lr, idx_scale)
-                    sr = utility.quantize(sr, self.args.rgb_range)
+                    if self.args.rgb_range == 255:
+                        sr = utility.quantize(sr, self.args.rgb_range)
+                    elif self.args.rgb_range == 5119:
+                        sr = utility.quantize_dicom(sr, self.args.rgb_range)
+                    else:
+                        print("not valid, condition of quantize")
+                        exit(-1)
 
                     save_list = [sr]
-                    self.ckp.log[-1, idx_data, idx_scale] += utility.calc_psnr(
-                        sr, hr, scale, self.args.rgb_range, dataset=d
-                    )
+                    if self.args.rgb_range == 255:
+                        self.ckp.log[-1, idx_data, idx_scale] += utility.calc_psnr(sr, hr, scale, self.args.rgb_range, \
+                                                                                   dataset=d)
+                    elif self.args.rgb_range == 5119:
+                        self.ckp.log[-1, idx_data, idx_scale] += utility.calc_psnr_dicom(sr, hr, scale, self.args.rgb_range, \
+                                                                                         dataset=d)
                     if self.args.save_gt:
                         save_list.extend([lr, hr])
 
-                    if self.args.save_results:
+                    if self.args.save_results and self.args.rgb_range == 255:
                         self.ckp.save_results(d, filename[0], save_list, scale)
+                    elif self.args.save_results and self.args.rgb_range == 5119:
+                        tmp_dir_hr = d.dir_hr
+                        self.ckp.save_results_dicom(d, filename[0], save_list, scale, tmp_dir_hr)
+                        
 
                 self.ckp.log[-1, idx_data, idx_scale] /= len(d)
                 best = self.ckp.log.max(0)

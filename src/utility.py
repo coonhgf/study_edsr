@@ -171,11 +171,39 @@ class checkpoint():
         self.queue = Queue()
 
         def bg_target(queue):
-            while True:
-                if not queue.empty():
-                    filename, tensor = queue.get()
-                    if filename is None: break
-                    imageio.imwrite(filename, tensor.numpy())
+            if self.args.rgb_range == 255:
+                while True:
+                    if not queue.empty():
+                        filename, tensor = queue.get()
+                        if filename is None: break
+                        imageio.imwrite(filename, tensor.numpy())
+            elif self.args.rgb_range == 5119:
+                while True:
+                    if not queue.empty():
+                        filename, tensor, ori_dcm_fp = queue.get()
+                        if filename is None: break
+                        #
+                        # save result as dcm
+                        #
+                        # read original dcm for meta data
+                        dcm_data = dcmread(ori_dcm_fp)
+            
+                        # modify seri_id, append ".yh_save_testing
+                        seri_id = dcm_data.SeriesInstanceUID
+                        dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_save_testing")
+                        
+                        # update image data
+                        np_rst = tensor.numpy()
+                        np_rst_round = np.round(np_rst, 0)
+                        np_rst_round_i16 = np_rst_round.astype(np.int16)
+                        np_rst_clip = np.clip(np_rst_round_i16, -2048, 3071)
+                        dcm_data.PixelData = np_rst_clip.tostring()
+                        print("shape of dcm_img_x2_clip={0}".format(np_rst_clip.shape))
+                        dcm_data.Rows, dcm_data.Columns = np_rst_clip.shape
+                        
+                        # save
+                        dcm_data.save_as(filename)
+                        
         
         self.process = [
             Process(target=bg_target, args=(self.queue,)) \
@@ -201,6 +229,22 @@ class checkpoint():
                 normalized = v[0].mul(255 / self.args.rgb_range)
                 tensor_cpu = normalized.byte().permute(1, 2, 0).cpu()
                 self.queue.put(('{}{}.png'.format(filename, p), tensor_cpu))
+                
+    def save_results_dicom(self, dataset, filename, save_list, scale, HR_dp):
+        if self.args.save_results:
+            filename = self.get_path(
+                'results-{}'.format(dataset.dataset.name),
+                '{}_x{}_'.format(filename, scale)
+            )
+            
+            ori_dcm_fp = os.path.join(HR_dp, "{0}.dcm".format(filename))
+            print("ori_dcm_fp={0}".format(ori_dcm_fp))
+
+            postfix = ('SR', 'LR', 'HR')
+            for v, p in zip(save_list, postfix):
+                normalized = v[0].mul(5119 / self.args.rgb_range)
+                tensor_cpu = normalized.byte().permute(1, 2, 0).cpu()
+                self.queue.put(('{}{}.dcm'.format(filename, p), tensor_cpu, ori_dcm_fp))
 
 def quantize(img, rgb_range):
     pixel_range = 255 / rgb_range
@@ -223,6 +267,42 @@ def calc_psnr(sr, hr, scale, rgb_range, dataset=None):
     mse = valid.pow(2).mean()
 
     return -10 * math.log10(mse)
+
+def quantize_dicom(img, rgb_range):
+    pixel_range = 5119 / rgb_range
+    return img.mul(pixel_range).clamp(0, 5119).round().div(pixel_range)
+
+def calc_psnr_dicom(sr, hr, scale, rgb_range=5119, dataset=None):
+    if hr.nelement() == 1:
+        print("hr.nelement() == 1, just return result:0")
+        return 0
+
+    diff = (sr - hr) / rgb_range
+    if dataset and dataset.dataset.benchmark:
+        print("calc psnr, in if part")
+        shave = scale
+        if diff.size(1) > 1:
+            gray_coeffs = [65.738, 129.057, 25.064]
+            convert = diff.new_tensor(gray_coeffs).view(1, 3, 1, 1) / 256
+            diff = diff.mul(convert).sum(dim=1)
+    else:
+        print("calc psnr, in else part")
+        shave = scale + 6
+
+    valid = diff[..., shave:-shave, shave:-shave]
+    mse = valid.pow(2).mean()
+    ori_code_psnr = -10 * math.log10(mse)
+    
+    #
+    # my psnr
+    #
+    yh_diff = (sr - hr)
+    yh_valid = yh_diff[..., shave:-shave, shave:-shave]
+    yh_mse = yh_valid.pow(2).mean()
+    yh_psnr = 10 * math.log10((5119**2)/yh_mse)
+    
+    print("ori psnr={0}, yh_psnr={1}".format(ori_code_psnr, yh_psnr))
+    return ori_code_psnr
 
 def make_optimizer(args, target):
     '''

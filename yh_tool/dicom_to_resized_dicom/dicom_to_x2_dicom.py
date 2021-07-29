@@ -186,7 +186,7 @@ if __name__ == '__main__':
             print("dcm_img_x2:{0}".format(dcm_img_x2[124:128, 124:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
             dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
-            dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -1024, 3071)
+            dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)
             print("dcm_img_x2_clip:{0}".format(dcm_img_x2_clip[124:128, 124:128]))
             dcm_data.PixelData = dcm_img_x2_clip.tostring()
             print("shape of dcm_img_x2_clip={0}".format(dcm_img_x2_clip.shape))
