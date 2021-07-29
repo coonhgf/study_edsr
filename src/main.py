@@ -43,14 +43,14 @@ def main():
                 t.train()
                 
                 ## [y]
-                #print("[y] going to call t.test()")
-                #t.test()
+                print("[y] going to call t.test()")
+                t.test()
                 # => want to, but something need mdf too
-                tmp_ep_idx += 1
-                if tmp_ep_idx % 3 == 0:                
-                    ### [y]
-                    print("[y] going to call t.test()")
-                    t.test()
+                #tmp_ep_idx += 1
+                #if tmp_ep_idx % 3 == 0:                
+                #    ### [y]
+                #    print("[y] going to call t.test()")
+                #    t.test()
 
             checkpoint.done()
 
