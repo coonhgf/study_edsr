@@ -197,7 +197,7 @@ class checkpoint():
                         
                         # update image data
                         np_rst = np.squeeze(tensor.numpy(), axis=2)
-                        np_rst = np_rst - 2048
+                        np_rst = np_rst - 1024.0
                         np_rst_round = np.round(np_rst, 0)
                         np_rst_round_i16 = np_rst_round.astype(np.int16)
                         np_rst_clip = np.clip(np_rst_round_i16, -2048, 3071)
