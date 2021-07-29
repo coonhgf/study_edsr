@@ -124,7 +124,7 @@ class Trainer():
                     if self.args.save_results and self.args.rgb_range == 255:
                         self.ckp.save_results(d, filename[0], save_list, scale)
                     elif self.args.save_results and self.args.rgb_range == 5119:
-                        tmp_dir_hr = d.dir_hr
+                        tmp_dir_hr = d.dataset.dir_hr
                         self.ckp.save_results_dicom(d, filename[0], save_list, scale, tmp_dir_hr)
                         
 
