@@ -89,7 +89,7 @@ class Trainer():
         self.do_test_idx += 1
         if self.do_test_idx % 3 != 0:
             print("[y] no testing in this epoch")
-            self.ckp.log[-1, 0, 0] = 0
+            self.ckp.log[-1, 0, 0] = torch.Tensor(0.0)
             return
         
         
