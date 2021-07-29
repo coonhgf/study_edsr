@@ -24,6 +24,9 @@ class Trainer():
             self.optimizer.load(ckp.dir, epoch=len(ckp.log))
 
         self.error_last = 1e8
+        
+        ### do test every X train
+        self.do_test_idx = 0
 
     def train(self):
         ### [y]
@@ -81,6 +84,14 @@ class Trainer():
     def test(self):
         ### [y]
         print("[y] run in trainer-test()")
+        
+        ### do test every X train
+        self.do_test_idx += 1
+        if self.do_test_idx % 3 != 0:
+            print("[y] no testing in this epoch")
+            self.ckp.log[-1, 0, 0] = 0
+            return
+        
         
         torch.set_grad_enabled(False)
 
