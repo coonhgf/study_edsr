@@ -198,11 +198,11 @@ class checkpoint():
                         # update image data
                         np_rst = np.squeeze(tensor.numpy(), axis=2)
                         ###
-                        tmp_min_val = np.min(np_rst)
-                        if tmp_min_val < -1:
-                            print("\n\n\n <-1 found \n\n\n")
+                        #tmp_min_val = np.min(np_rst)
+                        #if tmp_min_val < -1:
+                        #    print("\n\n\n <-1 found \n\n\n")
                         ###
-                        np_rst = np_rst - 1024.0
+                        np_rst = np_rst - 2048.0
                         np_rst_round = np.round(np_rst, 0)
                         np_rst_round_i16 = np_rst_round.astype(np.int16)
                         np_rst_clip = np.clip(np_rst_round_i16, -2048, 3071)

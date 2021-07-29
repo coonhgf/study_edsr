@@ -157,12 +157,12 @@ class SRData(data.Dataset):
                 dcm_img = dcm_data.pixel_array.astype(np.float32)
                 dcm_img_clip = np.clip(dcm_img, -2048, 3071)
                 dcm_img_shift = dcm_img_clip + 2048
-                pickle.dump(dcm_img_clip, _f)
+                pickle.dump(dcm_img_shift, _f)
                 
 
     def __getitem__(self, idx):
         lr, hr, filename = self._load_file(idx)
-        ####print("lr.shape={0}, hr.shape={1}, fn={2}".format(lr.shape, hr.shape, filename))
+        ####print("lr.shape={0}, hr.shape={1}, fn={2}".format(lr.shape, hr.shape, filename))        
         
         pair = self.get_patch(lr, hr)
         pair = common.set_channel(*pair, n_channels=self.args.n_colors)
