@@ -213,9 +213,14 @@ class checkpoint():
         for p in self.process: p.start()
 
     def end_background(self):
-        for _ in range(self.n_processes): self.queue.put((None, None))
-        while not self.queue.empty(): time.sleep(1)
-        for p in self.process: p.join()
+        if self.args.rgb_range == 255:
+            for _ in range(self.n_processes): self.queue.put((None, None))
+            while not self.queue.empty(): time.sleep(1)
+            for p in self.process: p.join()
+        elif self.args.rgb_range == 5119:
+            for _ in range(self.n_processes): self.queue.put((None, None, None))
+            while not self.queue.empty(): time.sleep(1)
+            for p in self.process: p.join() 
 
     def save_results(self, dataset, filename, save_list, scale):
         if self.args.save_results:
