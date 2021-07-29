@@ -196,7 +196,7 @@ class checkpoint():
                         dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_save_testing")
                         
                         # update image data
-                        np_rst = tensor.numpy()
+                        np_rst = np.squeeze(tensor.numpy(), axis=2)
                         np_rst_round = np.round(np_rst, 0)
                         np_rst_round_i16 = np_rst_round.astype(np.int16)
                         np_rst_clip = np.clip(np_rst_round_i16, -2048, 3071)
