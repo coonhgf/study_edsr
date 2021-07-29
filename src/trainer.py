@@ -85,12 +85,12 @@ class Trainer():
         ### [y]
         print("[y] run in trainer-test()")
         
-        ### do test every X train
-        self.do_test_idx += 1
-        if self.do_test_idx % 3 != 0:
-            print("[y] no testing in this epoch")
-            self.ckp.log[-1, 0, 0] = torch.Tensor(0.0)
-            return
+        # ### do test every X train
+        # self.do_test_idx += 1
+        # if self.do_test_idx % 3 != 0:
+        #     print("[y] no testing in this epoch")
+        #     self.ckp.log[-1, 0, 0] = torch.Tensor(0.0)
+        #     return
         
         
         torch.set_grad_enabled(False)
