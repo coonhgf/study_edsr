@@ -19,7 +19,7 @@
 # yh do summary
 #python main.py --model EDSR --data_train DIV2K --scale 2 --patch_size 96 --save yh_see_summary --reset --data_test DIV2K
 # 37.209, med_exp2, dataset:yh_edsr_csh_axial_exp2(yh_sr_exp2)
-python main.py --model EDSR --data_train yh_sr_exp2 --data_test yh_sr_exp2 --scale 2 --patch_size 48 --save med_exp2_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
+#python main.py --model EDSR --data_train yh_sr_exp2 --data_test yh_sr_exp2 --scale 2 --patch_size 48 --save med_exp2_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
 
 
 
