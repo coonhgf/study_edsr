@@ -53,7 +53,7 @@ class MeanShift_Ch1_dicom(nn.Conv2d):
             self.weight.data = (torch.eye(1).view(1, 1, 1, 1) / std.view(1)) / 50
         else:
             self.weight.data = (torch.eye(1).view(1, 1, 1, 1) / std.view(1)) * 50
-        self.bias.data = 0
+        self.bias.data = torch.Tensor(0)
         for p in self.parameters():
             p.requires_grad = False
     
