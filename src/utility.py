@@ -193,7 +193,7 @@ class checkpoint():
             
                         # modify seri_id, append ".yh_save_testing
                         seri_id = dcm_data.SeriesInstanceUID
-                        dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_save_testing")
+                        dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_testing")
                         
                         # update image data
                         np_rst = np.squeeze(tensor.numpy(), axis=2)
@@ -202,13 +202,21 @@ class checkpoint():
                         #if tmp_min_val < -1:
                         #    print("\n\n\n <-1 found \n\n\n")
                         ###
+                        # np_rst = np_rst - 2048.0
+                        # np_rst_round = np.round(np_rst, 0)
+                        # np_rst_round_i16 = np_rst_round.astype(np.int16)
+                        # np_rst_clip = np.clip(np_rst_round_i16, -2048, 3071)
+                        # dcm_data.PixelData = np_rst_clip.tostring()
+                        # print("shape of dcm_img_x2_clip={0}".format(np_rst_clip.shape))
+                        # dcm_data.Rows, dcm_data.Columns = np_rst_clip.shape
+                        ###
                         np_rst = np_rst - 2048.0
                         np_rst_round = np.round(np_rst, 0)
-                        np_rst_round_i16 = np_rst_round.astype(np.int16)
-                        np_rst_clip = np.clip(np_rst_round_i16, -2048, 3071)
-                        dcm_data.PixelData = np_rst_clip.tostring()
-                        print("shape of dcm_img_x2_clip={0}".format(np_rst_clip.shape))
-                        dcm_data.Rows, dcm_data.Columns = np_rst_clip.shape
+                        np_rst_clip = np.clip(np_rst_round, -2048, 3071)
+                        np_rst_i16 = np_rst_clip.astype(np.int16)
+                        dcm_data.PixelData = np_rst_i16.tostring()
+                        print("shape of dcm_img_x2_clip={0}".format(np_rst_i16.shape))
+                        dcm_data.Rows, dcm_data.Columns = np_rst_i16.shape
                         
                         # save
                         dcm_data.save_as(filename)
