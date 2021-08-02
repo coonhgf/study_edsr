@@ -133,6 +133,7 @@ if __name__ == '__main__':
     hu_min_exception_cnt = 0
     list_hu_min = []  # -1025 start add to list
     list_hu_max = []  # 3072 start add to list
+    tmp_rec_min_fn = []
     for a_dcm_fd in list_src_dcm_folder:
         print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
@@ -147,7 +148,6 @@ if __name__ == '__main__':
         
         # process
         tmp_mean_slice = []
-        tmp_rec_min_fn = []
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             #print("now dcm fp : {0}".format(tmp_dcm_fp))
@@ -168,7 +168,8 @@ if __name__ == '__main__':
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
                 list_hu_min.append(tmp_min_val)
-                tmp_rec_min_fn.append(tmp_dcm_fn)
+            if tmp_min_val <= -2048.0:
+                tmp_rec_min_fn.append(a_dcm_fd)
         
         
         # save the number
