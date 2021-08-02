@@ -94,8 +94,8 @@ if __name__ == '__main__':
     #
     # setting, usually modified
     #
-    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val.txt"  # [y] txt檔案, 裡面每一行表示一個folder name
+    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/train"
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_train.txt"  # [y] txt檔案, 裡面每一行表示一個folder name
     
     #
     # auto set
@@ -147,6 +147,7 @@ if __name__ == '__main__':
         
         # process
         tmp_mean_slice = []
+        tmp_rec_min_fn = []
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             #print("now dcm fp : {0}".format(tmp_dcm_fp))
@@ -167,13 +168,17 @@ if __name__ == '__main__':
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
                 list_hu_min.append(tmp_min_val)
+                tmp_rec_min_fn.append(tmp_dcm_fn)
         
         
         # save the number
         mean_per_slice.append(tmp_mean_slice)
         a_mean_of_scan = sum(tmp_mean_slice)/len(tmp_mean_slice)
         mean_per_scan.append(a_mean_of_scan)
-        
+    
+    ### debug
+    print("tmp_rec_min_fn={0}".format(tmp_rec_min_fn))
+    
         
     # calc all scan's mean and show
     a_mean_of_all = sum(mean_per_scan)/len(mean_per_scan)
