@@ -163,9 +163,9 @@ if __name__ == '__main__':
             
             # show dicom tag info
             if sidx == 0:
-                the_bit_alc = dcm_data.BitsAllocated.value
-                the_bit_sto = dcm_data.BitsStored.value
-                the_bit_high = dcm_data.HighBit.value
+                the_bit_alc = dcm_data.BitsAllocated
+                the_bit_sto = dcm_data.BitsStored
+                the_bit_high = dcm_data.HighBit
                 print("{0} bit_alc = {1}".format(a_dcm_fd, the_bit_alc))
                 print("{0} bit_sto = {1}".format(a_dcm_fd, the_bit_sto))
                 print("{0} bit_high = {1}".format(a_dcm_fd, the_bit_high))
