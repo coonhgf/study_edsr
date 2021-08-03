@@ -179,6 +179,9 @@ if __name__ == '__main__':
         # rec max and min hu of this scan
         list_all_hu_max.append(scan_hu_max)
         list_all_hu_min.append(scan_hu_min)
+        print("scan_hu_max={0}".format(scan_hu_max))
+        print("scan_hu_min={0}".format(scan_hu_min))
+        print()
     
     
     #
@@ -189,7 +192,6 @@ if __name__ == '__main__':
     print("len of mean_per_scan={0}".format(len(list_all_mean)))
     print("a_mean_of_all={0}".format(a_mean_of_all))
     print("")
-    
 
     
     # hu value ana
@@ -197,8 +199,9 @@ if __name__ == '__main__':
     dict_hu_min_counter = Counter(list_all_hu_min)
     cvt_sorted_list_hu_max = sorted(dict_hu_max_counter.items(), key=lambda x:x[1], reverse=True)
     cvt_sorted_list_hu_min = sorted(dict_hu_min_counter.items(), key=lambda x:x[1], reverse=True)
-    print("top 10 of cvt_sorted_list_hu_max=\n{0}".format(cvt_sorted_list_hu_max[0:10]))
+    print("top [all] of cvt_sorted_list_hu_max=\n{0}".format(cvt_sorted_list_hu_max))
     print("top 10 of cvt_sorted_list_hu_min=\n{0}".format(cvt_sorted_list_hu_min[0:10]))
     print("")
+    
     
     print("calc hu mean end")
