@@ -169,8 +169,8 @@ if __name__ == '__main__':
                 print("{0} bit_alc = {1}".format(a_dcm_fd, the_bit_alc))
                 print("{0} bit_sto = {1}".format(a_dcm_fd, the_bit_sto))
                 print("{0} bit_high = {1}".format(a_dcm_fd, the_bit_high))
-                print("ds.SmallestImagePixelValue={0}".format(dcm_data.SmallestImagePixelValue))
-                print("ds.LargestImagePixelValue={0}".format(dcm_data.LargestImagePixelValue))
+                #print("ds.SmallestImagePixelValue={0}".format(dcm_data.SmallestImagePixelValue))
+                #print("ds.LargestImagePixelValue={0}".format(dcm_data.LargestImagePixelValue))
             
             # calc mean of this slice
             a_mean_of_slice = np.mean(dcm_img)
