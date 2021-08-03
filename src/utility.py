@@ -210,9 +210,17 @@ class checkpoint():
                         # print("shape of dcm_img_x2_clip={0}".format(np_rst_clip.shape))
                         # dcm_data.Rows, dcm_data.Columns = np_rst_clip.shape
                         ###
+                        # np_rst = np_rst - 2048.0
+                        # np_rst_round = np.round(np_rst, 0)
+                        # np_rst_clip = np.clip(np_rst_round, -2048, 3071)
+                        # np_rst_i16 = np_rst_clip.astype(np.int16)
+                        # dcm_data.PixelData = np_rst_i16.tostring()
+                        # print("shape of dcm_img_x2_clip={0}".format(np_rst_i16.shape))
+                        # dcm_data.Rows, dcm_data.Columns = np_rst_i16.shape
+                        ### test -1024
                         np_rst = np_rst - 2048.0
                         np_rst_round = np.round(np_rst, 0)
-                        np_rst_clip = np.clip(np_rst_round, -2048, 3071)
+                        np_rst_clip = np.clip(np_rst_round, -1024, 3071)
                         np_rst_i16 = np_rst_clip.astype(np.int16)
                         dcm_data.PixelData = np_rst_i16.tostring()
                         print("shape of dcm_img_x2_clip={0}".format(np_rst_i16.shape))
