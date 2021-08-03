@@ -186,8 +186,6 @@ if __name__ == '__main__':
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
                 list_hu_min.append(tmp_min_val)
-            if tmp_min_val < (-2048.0):
-                tmp_rec_min_fn.append(a_dcm_fd)
         
         
         print("hu_max={0}".format(hu_max))
@@ -198,9 +196,6 @@ if __name__ == '__main__':
         mean_per_slice.append(tmp_mean_slice)
         a_mean_of_scan = sum(tmp_mean_slice)/len(tmp_mean_slice)
         mean_per_scan.append(a_mean_of_scan)
-    
-    ### debug
-    print("tmp_rec_min_fn={0}".format(tmp_rec_min_fn))
     
         
     # calc all scan's mean and show
