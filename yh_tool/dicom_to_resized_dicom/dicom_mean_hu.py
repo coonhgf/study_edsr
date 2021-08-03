@@ -156,6 +156,18 @@ if __name__ == '__main__':
             dcm_img = dcm_data.pixel_array.astype(np.float64)
             
             #
+            #
+            #
+            if sidx == 0:
+                print("dcm_data.BitsAllocated".format(dcm_data.BitsAllocated))
+                print("dcm_data.BitsStored".format(dcm_data.BitsStored))
+                print("dcm_data.HighBit".format(dcm_data.HighBit))
+                print("dcm_data.WindowCenter".format(dcm_data.WindowCenter))
+                print("dcm_data.WindowWidth".format(dcm_data.WindowWidth))
+                print("dcm_data.RescaleIntercept".format(dcm_data.RescaleIntercept))
+                print("dcm_data.RescaleSlope".format(dcm_data.RescaleSlope))
+            
+            #
             # convert to HU value
             #
             the_intercept = dcm_data.RescaleIntercept
