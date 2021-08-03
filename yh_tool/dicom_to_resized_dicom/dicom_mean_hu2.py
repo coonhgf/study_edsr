@@ -173,18 +173,16 @@ if __name__ == '__main__':
                 #print("ds.SmallestImagePixelValue={0}".format(dcm_data.SmallestImagePixelValue))
                 #print("ds.LargestImagePixelValue={0}".format(dcm_data.LargestImagePixelValue))
                 
-            if sidx == 26:
-                list_series_dcm = [tmp_dcm_fp]
-            if sidx == 27:
-                list_series_dcm.append(tmp_dcm_fp)
+
             if sidx == 28:
                 print("compare pixel_array and data from sitk")
                 print("pixel_array[250:256, 250:256]=\n{0}".format(dcm_img[250:256, 250:256]))
+                print("do mapping to hu:")
+                dcm_img_hu = dcm_img * 1 + (-1024)
+                print("dcm_img_hu[250:256, 250:256]=\n{0}".format(dcm_img_hu[250:256, 250:256]))
                 
                 # sitk
-                #list_series_dcm = [tmp_dcm_fp]
-                print(tmp_dcm_fp)
-                list_series_dcm.append(tmp_dcm_fp)
+                list_series_dcm = [tmp_dcm_fp]
                 itk_image = sitk.ReadImage(list_series_dcm)
                 np_hu_img = sitk.GetArrayFromImage(itk_image)
                 print("np_hu_img.shape={0}".format(np_hu_img.shape))
