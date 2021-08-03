@@ -168,7 +168,7 @@ if __name__ == '__main__':
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
                 list_hu_min.append(tmp_min_val)
-            if tmp_min_val <= -2048.0:
+            if tmp_min_val < (-2048.0):
                 tmp_rec_min_fn.append(a_dcm_fd)
         
         
