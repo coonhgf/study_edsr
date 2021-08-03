@@ -127,13 +127,9 @@ if __name__ == '__main__':
     
     # read each dicom folder's dicom and convert to png
     # png naming is FolderName___001.png etc.
-    mean_per_scan = []  # a list
-    mean_per_slice = []  # list of list
-    hu_max_exception_cnt = 0
-    hu_min_exception_cnt = 0
-    list_hu_min = []  # -1025 start add to list
-    list_hu_max = []  # 3072 start add to list
-    #tmp_rec_min_fn = []  # debug
+    list_all_mean = []  # all mean
+    list_all_hu_max = []
+    list_all_hu_min = []
     for a_dcm_fd in list_src_dcm_folder:
         print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
@@ -147,7 +143,9 @@ if __name__ == '__main__':
         list_filename.sort()
         
         # process
-        tmp_mean_slice = []
+        list_scan_hu_mean = []
+        scan_hu_max = -1000
+        scan_hu_min = 1000
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             #print("now dcm fp : {0}".format(tmp_dcm_fp))
@@ -166,54 +164,39 @@ if __name__ == '__main__':
             
             # calc mean of this slice
             a_mean_of_slice = np.mean(dcm_img_hu)
-            tmp_mean_slice.append(a_mean_of_slice)
+            list_scan_hu_mean.append(a_mean_of_slice)
             tmp_max_val = np.max(dcm_img_hu)
             tmp_min_val = np.min(dcm_img_hu)
-            if tmp_max_val > 3071.0:
-                hu_max_exception_cnt += 1
-                list_hu_max.append(tmp_max_val)
-            if tmp_min_val < -1024.0:
-                hu_min_exception_cnt += 1
-                list_hu_min.append(tmp_min_val)
-            # debug
-            # if tmp_min_val < (-2048.0):
-            #     tmp_rec_min_fn.append(a_dcm_fd)
+            if tmp_max_val > scan_hu_max:
+                scan_hu_max = tmp_max_val
+            if tmp_min_val < scan_hu_min:
+                scan_hu_min = tmp_min_val
+            
+        # calc and save the mean of this scan
+        a_mean_of_scan = sum(list_scan_hu_mean)/len(list_scan_hu_mean)
+        list_all_mean.append(a_mean_of_scan)
         
-        
-        # save the number
-        mean_per_slice.append(tmp_mean_slice)
-        a_mean_of_scan = sum(tmp_mean_slice)/len(tmp_mean_slice)
-        mean_per_scan.append(a_mean_of_scan)
+        # rec max and min hu of this scan
+        list_all_hu_max.append(scan_hu_max)
+        list_all_hu_min.append(scan_hu_min)
     
-    ### debug
-    #print("tmp_rec_min_fn={0}".format(tmp_rec_min_fn))
     
-        
+    #
     # calc all scan's mean and show
-    a_mean_of_all = sum(mean_per_scan)/len(mean_per_scan)
-    
-    print("mean_per_scan={0}".format(mean_per_scan))
-    print("len of mean_per_scan={0}".format(len(mean_per_scan)))
+    #
+    a_mean_of_all = sum(list_all_mean)/len(list_all_mean)
+    print("mean_per_scan={0}".format(list_all_mean))
+    print("len of mean_per_scan={0}".format(len(list_all_mean)))
     print("a_mean_of_all={0}".format(a_mean_of_all))
     print("")
     
-    # shift from -1024~3071 to 0~4095
-    ###print("shift hu from -1024~3071 to 0~4095")
-    # =>
-    print("assume hu range is -2048~3071, now shift to 0~5119")
-    mean_with_shift = a_mean_of_all + 2048
-    norm_mean_with_shift = mean_with_shift / 5119
-    print("mean_with_shift={0}".format(mean_with_shift))
-    print("norm_mean_with_shift={0}".format(norm_mean_with_shift))
-    print("")
+
     
-    # hu value exception checking
-    dict_hu_max_counter = Counter(list_hu_max)
-    dict_hu_min_counter = Counter(list_hu_min)
+    # hu value ana
+    dict_hu_max_counter = Counter(list_all_hu_max)
+    dict_hu_min_counter = Counter(list_all_hu_min)
     cvt_sorted_list_hu_max = sorted(dict_hu_max_counter.items(), key=lambda x:x[1], reverse=True)
     cvt_sorted_list_hu_min = sorted(dict_hu_min_counter.items(), key=lambda x:x[1], reverse=True)
-    print("hu_max_exception_cnt={0}".format(hu_max_exception_cnt))
-    print("hu_min_exception_cnt={0}".format(hu_min_exception_cnt))
     print("top 10 of cvt_sorted_list_hu_max=\n{0}".format(cvt_sorted_list_hu_max[0:10]))
     print("top 10 of cvt_sorted_list_hu_min=\n{0}".format(cvt_sorted_list_hu_min[0:10]))
     print("")
