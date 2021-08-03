@@ -133,7 +133,9 @@ if __name__ == '__main__':
     hu_min_exception_cnt = 0
     list_hu_min = []  # -1025 start add to list
     list_hu_max = []  # 3072 start add to list
-    #tmp_rec_min_fn = []  # debug
+    list_bit_alc = []
+    list_bit_sto = []
+    list_bit_high = []
     for a_dcm_fd in list_src_dcm_folder:
         print("processing : {0}".format(a_dcm_fd))
         tmp_src_dp = os.path.join(src_dcm_root_dp, a_dcm_fd)
@@ -148,6 +150,8 @@ if __name__ == '__main__':
         
         # process
         tmp_mean_slice = []
+        hu_max = 0
+        hu_min = 0
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             #print("now dcm fp : {0}".format(tmp_dcm_fp))
@@ -157,21 +161,38 @@ if __name__ == '__main__':
             dcm_data = dcmread(tmp_dcm_fp)
             dcm_img = dcm_data.pixel_array.astype(np.float64)
             
+            # show dicom tag info
+            if sidx == 0:
+                the_bit_alc = dcm_data.BitsAllocated.value
+                the_bit_sto = dcm_data.BitsStored.value
+                the_bit_high = dcm_data.HighBit.value
+                print("{0} bit_alc = {1}".format(a_dcm_fd, the_bit_alc))
+                print("{0} bit_sto = {1}".format(a_dcm_fd, the_bit_sto))
+                print("{0} bit_high = {1}".format(a_dcm_fd, the_bit_high))
+            
             # calc mean of this slice
             a_mean_of_slice = np.mean(dcm_img)
             tmp_mean_slice.append(a_mean_of_slice)
             tmp_max_val = np.max(dcm_img)
             tmp_min_val = np.min(dcm_img)
+            if tmp_max_val > hu_max:
+                hu_max = tmp_max_val
+            if tmp_min_val < hu_min:
+                hu_min = tmp_min_val
+            
             if tmp_max_val > 3071.0:
                 hu_max_exception_cnt += 1
                 list_hu_max.append(tmp_max_val)
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
                 list_hu_min.append(tmp_min_val)
-            # debug
-            # if tmp_min_val < (-2048.0):
-            #     tmp_rec_min_fn.append(a_dcm_fd)
+            if tmp_min_val < (-2048.0):
+                tmp_rec_min_fn.append(a_dcm_fd)
         
+        
+        print("hu_max={0}".format(hu_max))
+        print("hu_min={0}".format(hu_min))
+        print("\n\n")
         
         # save the number
         mean_per_slice.append(tmp_mean_slice)
@@ -179,7 +200,7 @@ if __name__ == '__main__':
         mean_per_scan.append(a_mean_of_scan)
     
     ### debug
-    #print("tmp_rec_min_fn={0}".format(tmp_rec_min_fn))
+    print("tmp_rec_min_fn={0}".format(tmp_rec_min_fn))
     
         
     # calc all scan's mean and show
