@@ -157,11 +157,18 @@ if __name__ == '__main__':
             dcm_data = dcmread(tmp_dcm_fp)
             dcm_img = dcm_data.pixel_array.astype(np.float64)
             
+            #
+            # convert to HU value
+            #
+            the_intercept = dcm_data.RescaleIntercept
+            the_slope = dcm_data.RescaleSlope
+            dcm_img_hu = dcm_img * the_slope + the_intercept
+            
             # calc mean of this slice
-            a_mean_of_slice = np.mean(dcm_img)
+            a_mean_of_slice = np.mean(dcm_img_hu)
             tmp_mean_slice.append(a_mean_of_slice)
-            tmp_max_val = np.max(dcm_img)
-            tmp_min_val = np.min(dcm_img)
+            tmp_max_val = np.max(dcm_img_hu)
+            tmp_min_val = np.min(dcm_img_hu)
             if tmp_max_val > 3071.0:
                 hu_max_exception_cnt += 1
                 list_hu_max.append(tmp_max_val)
