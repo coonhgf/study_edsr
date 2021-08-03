@@ -170,6 +170,8 @@ if __name__ == '__main__':
                 print("{0} bit_alc = {1}".format(a_dcm_fd, the_bit_alc))
                 print("{0} bit_sto = {1}".format(a_dcm_fd, the_bit_sto))
                 print("{0} bit_high = {1}".format(a_dcm_fd, the_bit_high))
+                print("{0} intercept = {1}".format(a_dcm_fd, dcm_data.RescaleIntercept))
+                print("{0} slope = {1}".format(a_dcm_fd, dcm_data.RescaleSlope))
                 #print("ds.SmallestImagePixelValue={0}".format(dcm_data.SmallestImagePixelValue))
                 #print("ds.LargestImagePixelValue={0}".format(dcm_data.LargestImagePixelValue))
                 
