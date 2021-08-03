@@ -19,6 +19,7 @@ from pydicom import dcmread
 from scipy.ndimage.interpolation import zoom
 import shutil
 from collections import Counter
+import SimpleITK as sitk
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
@@ -171,6 +172,19 @@ if __name__ == '__main__':
                 print("{0} bit_high = {1}".format(a_dcm_fd, the_bit_high))
                 #print("ds.SmallestImagePixelValue={0}".format(dcm_data.SmallestImagePixelValue))
                 #print("ds.LargestImagePixelValue={0}".format(dcm_data.LargestImagePixelValue))
+                
+            if sidx == 28:
+                print("compare pixel_array and data from sitk")
+                print("pixel_array[250:256, 250:256]=\n{0}".format(dcm_img[250:256, 250:256]))
+                
+                # sitk
+                list_series_dcm = [tmp_dcm_fp]
+                itk_image = sitk.ReadImage(list_series_dcm)
+                np_hu_img = sitk.GetArrayFromImage(itk_image)
+                print("np_hu_img.shape={0}".format(np_hu_img.shape))
+                print("np_hu_img[250:256, 250:256]=\n{0}".format(np_hu_img.shape[0, 250:256, 250:256]))
+                
+                
             
             # calc mean of this slice
             a_mean_of_slice = np.mean(dcm_img)
@@ -198,6 +212,11 @@ if __name__ == '__main__':
         mean_per_slice.append(tmp_mean_slice)
         a_mean_of_scan = sum(tmp_mean_slice)/len(tmp_mean_slice)
         mean_per_scan.append(a_mean_of_scan)
+        
+        
+        ###
+        print("Debug, Do break!")
+        break
     
         
     # calc all scan's mean and show
