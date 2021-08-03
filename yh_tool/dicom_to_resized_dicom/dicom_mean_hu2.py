@@ -150,8 +150,8 @@ if __name__ == '__main__':
         
         # process
         tmp_mean_slice = []
-        hu_max = 0
-        hu_min = 0
+        hu_max = -2048
+        hu_min = 2048
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
             #print("now dcm fp : {0}".format(tmp_dcm_fp))
