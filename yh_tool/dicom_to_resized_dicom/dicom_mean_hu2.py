@@ -178,11 +178,12 @@ if __name__ == '__main__':
                 print("pixel_array[250:256, 250:256]=\n{0}".format(dcm_img[250:256, 250:256]))
                 
                 # sitk
+                print(tmp_dcm_fp)
                 list_series_dcm = [tmp_dcm_fp]
                 itk_image = sitk.ReadImage(list_series_dcm)
                 np_hu_img = sitk.GetArrayFromImage(itk_image)
                 print("np_hu_img.shape={0}".format(np_hu_img.shape))
-                print("np_hu_img[250:256, 250:256]=\n{0}".format(np_hu_img.shape[0, 250:256, 250:256]))
+                print("np_hu_img[250:256, 250:256]=\n{0}".format(np_hu_img[0, 250:256, 250:256]))
                 
                 
             
