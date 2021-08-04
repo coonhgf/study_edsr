@@ -184,7 +184,12 @@ if __name__ == '__main__':
             the_slope = dcm_data.RescaleSlope
             dcm_img_hu = dcm_img * the_slope + the_intercept
             dcm_img_hu_clip = np.clip(dcm_img_hu, -2048, 3071)
-            dcm_rst_i16 = dcm_img_hu_clip.astype(np.int16)
+            # back to its value by using intercept and slope
+            if the_slope == 0:
+                print("error slope is 0, quit now")
+                exit(-1)
+            dcm_rst = (dcm_img_hu_clip - the_intercept) / the_slope
+            dcm_rst_i16 = dcm_rst.astype(np.int16)
             dcm_data.PixelData = dcm_rst_i16.tostring()
             print("shape of dcm_rst_i16={0}".format(dcm_rst_i16.shape))
             dcm_data.Rows, dcm_data.Columns = dcm_rst_i16.shape
