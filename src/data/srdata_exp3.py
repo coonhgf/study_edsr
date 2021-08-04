@@ -18,7 +18,7 @@ from pydicom import dcmread
 class SRData(data.Dataset):
     def __init__(self, args, name='', train=True, benchmark=False):
         ### [y]
-        print("[y] run srdata's [exp2] __init__()")
+        print("[y] run srdata's [exp3] __init__()")
         
         self.args = args
         self.name = name
@@ -103,12 +103,12 @@ class SRData(data.Dataset):
                 self.repeat = max(n_patches // n_images, 1)
         
         ### [y]
-        print("[y] end srdata's [exp2] __init__()")
+        print("[y] end srdata's [exp3] __init__()")
         
     # Below functions as used to prepare images
     def _scan(self):
         ### [y]
-        print("[y] start srdata's [exp2] _scan()")
+        print("[y] start srdata's [exp3] _scan()")
         
         names_hr = sorted(
             glob.glob(os.path.join(self.dir_hr, '*' + self.ext[0]))
@@ -124,13 +124,13 @@ class SRData(data.Dataset):
                 ))
                 
         ### [y]
-        print("[y] end srdata's [exp2] _scan()")
+        print("[y] end srdata's [exp3] _scan()")
 
         return names_hr, names_lr
 
     def _set_filesystem(self, dir_data):
         ### [y]
-        print("[y] now in srdata's [exp2] _set_filesystem()")
+        print("[y] now in srdata's [exp3] _set_filesystem()")
         
         self.apath = os.path.join(dir_data, self.name)  # [y] "../../../../Eclipse_ws_data/edsr/dataset/yh_sr_exp1"
         self.dir_hr = os.path.join(self.apath, 'HR')  # [y] will be overrided
@@ -143,7 +143,7 @@ class SRData(data.Dataset):
         print("[y]srdata, self.dir_hr={0}".format(self.dir_hr))
         print("[y]srdata, self.dir_lr={0}".format(self.dir_lr))
         ### [y]
-        print("[y] end srdata's [exp2] _set_filesystem()")
+        print("[y] end srdata's [exp3] _set_filesystem()")
         
 
     def _check_and_load(self, ext, img, f, verbose=True):

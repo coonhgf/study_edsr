@@ -20,6 +20,8 @@
 #python main.py --model EDSR --data_train DIV2K --scale 2 --patch_size 96 --save yh_see_summary --reset --data_test DIV2K
 # 37.209, med_exp2, dataset:yh_edsr_csh_axial_exp2(yh_sr_exp2)
 #python main.py --model EDSR --data_train yh_sr_exp2 --data_test yh_sr_exp2 --scale 2 --patch_size 48 --save med_exp2_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
+# 37.209, med_exp3, dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3)
+python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 48 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
 
 
 
@@ -61,7 +63,7 @@
 # 37.209, test with med_exp1 val data, with mdf 1ch code model
 #python main.py --data_test Demo --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp1_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp1" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --patch_size 48
 # 37.209, test with med_exp2 val data, with hu training, and save as dicom code
-python main.py --data_test yh_sr_exp2 --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp2_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp2" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --patch_size 48
+#python main.py --data_test yh_sr_exp2 --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp2_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp2" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --patch_size 48
 
 
 

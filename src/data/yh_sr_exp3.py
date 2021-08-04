@@ -1,26 +1,26 @@
 import os
-from data import srdata_exp2
+from data import srdata_exp3
 import glob
 
 
-class yh_sr_exp2(srdata_exp2.SRData):
-    def __init__(self, args, name='yh_sr_exp2', train=True, benchmark=False):
+class yh_sr_exp3(srdata_exp3.SRData):
+    def __init__(self, args, name='yh_sr_exp3', train=True, benchmark=False):
         ### [y]
-        print("[y] run yh_sr_exp2's __init__()")
+        print("[y] run yh_sr_exp3's __init__()")
         
         self.train = train
         
-        super(yh_sr_exp2, self).__init__(
+        super(yh_sr_exp3, self).__init__(
             args, name=name, train=train, benchmark=benchmark
         )
         
         ### [y]
-        print("[y] end yh_sr_exp2's __init__()")
+        print("[y] end yh_sr_exp3's __init__()")
         
 
     def _scan(self):
         ### [y]
-        print("[y] start yh_sr_exp2's _scan()")
+        print("[y] start yh_sr_exp3's _scan()")
         
         names_hr = glob.glob(os.path.join(self.dir_hr, '*' + self.ext[0]))
         names_hr.sort()
@@ -38,21 +38,21 @@ class yh_sr_exp2(srdata_exp2.SRData):
         print("len of names_lr[0]={0}".format(len(names_lr[0])))
         
         ### [y]
-        print("[y] end yh_sr_exp2's _scan()")
+        print("[y] end yh_sr_exp3's _scan()")
 
         return names_hr, names_lr
 
     def _set_filesystem(self, dir_data):
         ### [y]
-        print("[y] now in yh_sr_exp2's _set_filesystem()")
+        print("[y] now in yh_sr_exp3's _set_filesystem()")
         
         if self.train:
-            super(yh_sr_exp2, self)._set_filesystem(dir_data)
+            super(yh_sr_exp3, self)._set_filesystem(dir_data)
             self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_train_HR')
             self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_train_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
         else:
-            super(yh_sr_exp2, self)._set_filesystem(dir_data)
+            super(yh_sr_exp3, self)._set_filesystem(dir_data)
             self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val_HR')
             self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
@@ -62,5 +62,5 @@ class yh_sr_exp2(srdata_exp2.SRData):
         print("[y] self.dir_hr={0}".format(self.dir_hr))
         print("[y] self.dir_lr={0}".format(self.dir_lr))
         ### [y]
-        print("[y] end yh_sr_exp2's _set_filesystem()")
+        print("[y] end yh_sr_exp3's _set_filesystem()")
 
