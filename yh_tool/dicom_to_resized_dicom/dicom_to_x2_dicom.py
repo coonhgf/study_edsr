@@ -94,9 +94,9 @@ if __name__ == '__main__':
     # setting, usually modified
     #
     src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val_debug.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
-    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom/yh_edsr_csh_axial_exp2_val_HR"
-    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom/yh_edsr_csh_axial_exp2_val_LR_bicubic/X2"
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
+    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_val_HR"
+    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_val_LR_bicubic/X2"
     
     #
     # auto set
@@ -171,7 +171,7 @@ if __name__ == '__main__':
             
             # modify seri_id, append ".yh_mdf
             seri_id = dcm_data.SeriesInstanceUID
-            dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "yh_mdf")
+            dcm_data.SeriesInstanceUID = "{0}.{1}".format(seri_id, "ds_exp3")
             #dcm_data[0x10, 0x10].value = "{0}.{1}".format(seri_id, "yh_mdf")  # => can not work
             #dcm_data[0x28, 0x10].value = 256  # rows => can not work
             #dcm_data[0x28, 0x11].value = 256  # columns => can not work
@@ -180,17 +180,15 @@ if __name__ == '__main__':
             print("shape of the_dcm_img={0}".format(dcm_img.shape))
             
             # resize image
-            resize_factor = [0.5, 0.5]  # 512 to 256
+            resize_factor = [0.5, 0.5]  # ex : 512 to 256
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
             print("[124:128, 124:128]")
             print("dcm_img_x2:{0}".format(dcm_img_x2[124:128, 124:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
             dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
-            dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)
-            print("dcm_img_x2_clip:{0}".format(dcm_img_x2_clip[124:128, 124:128]))
-            dcm_data.PixelData = dcm_img_x2_clip.tostring()
-            print("shape of dcm_img_x2_clip={0}".format(dcm_img_x2_clip.shape))
-            dcm_data.Rows, dcm_data.Columns = dcm_img_x2_clip.shape
+            #dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)  # notice, no clip here
+            dcm_data.PixelData = dcm_img_x2_i16.tostring()
+            dcm_data.Rows, dcm_data.Columns = dcm_img_x2_i16.shape
             
             # save 
             slice_fn = "{0}__{1}x2.dcm".format(a_dcm_fd, "%04d" % sidx)
