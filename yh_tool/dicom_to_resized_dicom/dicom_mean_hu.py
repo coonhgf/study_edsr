@@ -166,6 +166,14 @@ if __name__ == '__main__':
                 print("dcm_data.WindowWidth={0}".format(dcm_data.WindowWidth))
                 print("dcm_data.RescaleIntercept={0}".format(dcm_data.RescaleIntercept))
                 print("dcm_data.RescaleSlope={0}".format(dcm_data.RescaleSlope))
+                print("============")
+                win_c = dcm_data.WindowCenter
+                win_w = dcm_data.WindowWidth
+                win_min = win_c - (win_w/2)
+                win_max = win_c + (win_w/2)
+                print("win_min={0}".format(win_min))
+                print("win_max={0}".format(win_max))
+                print("============")
             
             #
             # convert to HU value
