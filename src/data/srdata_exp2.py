@@ -153,12 +153,20 @@ class SRData(data.Dataset):
             with open(f, 'wb') as _f:
                 ###pickle.dump(imageio.imread(img), _f)
                 # =>
+                # dcm_data = dcmread(img)
+                # dcm_img = dcm_data.pixel_array.astype(np.float32)
+                # dcm_img_clip = np.clip(dcm_img, -2048, 3071)
+                # dcm_img_shift = dcm_img_clip + 2048
+                # pickle.dump(dcm_img_shift, _f)
+                # => should be to hu:
                 dcm_data = dcmread(img)
                 dcm_img = dcm_data.pixel_array.astype(np.float32)
-                dcm_img_clip = np.clip(dcm_img, -2048, 3071)
-                dcm_img_shift = dcm_img_clip + 2048
+                the_intercept = dcm_data.RescaleIntercept
+                the_slope = dcm_data.RescaleSlope
+                dcm_img_hu = dcm_img * the_slope + the_intercept
+                dcm_img_hu_clip = np.clip(dcm_img_hu, -2048.0, 3071.0)
+                dcm_img_shift = dcm_img_hu_clip + 2048
                 pickle.dump(dcm_img_shift, _f)
-                
 
     def __getitem__(self, idx):
         lr, hr, filename = self._load_file(idx)

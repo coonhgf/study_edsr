@@ -46,7 +46,7 @@ class MeanShift_Ch1_dicom(nn.Conv2d):
     #     for p in self.parameters():
     #         p.requires_grad = False
     #=>
-    def __init__(self, rgb_range, rgb_mean=[0.3734036], rgb_std=[1.0], sign=-1):
+    def __init__(self, rgb_range, rgb_std=[1.0], sign=-1):
         super(MeanShift_Ch1_dicom, self).__init__(1, 1, kernel_size=1)
         std = torch.Tensor(rgb_std)
         if sign == -1:

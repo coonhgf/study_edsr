@@ -48,13 +48,13 @@ class yh_sr_exp2(srdata_exp2.SRData):
         
         if self.train:
             super(yh_sr_exp2, self)._set_filesystem(dir_data)
-            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_train_HR')
-            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_train_LR_bicubic')
+            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_train_HR')
+            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_train_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
         else:
             super(yh_sr_exp2, self)._set_filesystem(dir_data)
-            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_val_HR')
-            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp2_val_LR_bicubic')
+            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val_HR')
+            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
         
         ### [y]
