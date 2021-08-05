@@ -196,7 +196,7 @@ if __name__ == '__main__':
                 print("========")
                 np_lut_hu = apply_modality_lut(dcm_img, dcm_data)
                 print("np_lut_hu.shape={0}".format(np_lut_hu.shape))
-                print("np_lut_hu[250:260, 250:260]=\n{0}".format(np_lut_hu[0, 250:260, 250:260]))
+                print("np_lut_hu[250:260, 250:260]=\n{0}".format(np_lut_hu[250:260, 250:260]))
                 print("========")
                 
                 
