@@ -235,8 +235,8 @@ if __name__ == '__main__':
         
         
         ###
-        print("Debug, Do break!")
-        break
+        #print("Debug, Do break!")
+        #break
     
         
     # calc all scan's mean and show
