@@ -20,6 +20,7 @@ from scipy.ndimage.interpolation import zoom
 import shutil
 from collections import Counter
 import SimpleITK as sitk
+from pydicom.pixel_data_handlers.util import apply_modality_lut
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
@@ -96,7 +97,7 @@ if __name__ == '__main__':
     # setting, usually modified
     #
     src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/train"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_train.txt"  # [y] txt檔案, 裡面每一行表示一個folder name
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_yh_ana.txt"  # [y] txt檔案, 裡面每一行表示一個folder name
     
     #
     # auto set
@@ -167,6 +168,8 @@ if __name__ == '__main__':
                 the_bit_alc = dcm_data.BitsAllocated
                 the_bit_sto = dcm_data.BitsStored
                 the_bit_high = dcm_data.HighBit
+                the_intercept = dcm_data.RescaleIntercept
+                the_slope = dcm_data.RescaleSlope
                 print("{0} bit_alc = {1}".format(a_dcm_fd, the_bit_alc))
                 print("{0} bit_sto = {1}".format(a_dcm_fd, the_bit_sto))
                 print("{0} bit_high = {1}".format(a_dcm_fd, the_bit_high))
@@ -178,17 +181,23 @@ if __name__ == '__main__':
 
             if sidx == 28:
                 print("compare pixel_array and data from sitk")
-                print("pixel_array[250:256, 250:256]=\n{0}".format(dcm_img[250:256, 250:256]))
+                print("pixel_array[250:260, 250:260]=\n{0}".format(dcm_img[250:260, 250:260]))
                 print("do mapping to hu:")
-                dcm_img_hu = dcm_img * 1 + (-1024)
-                print("dcm_img_hu[250:256, 250:256]=\n{0}".format(dcm_img_hu[250:256, 250:256]))
+                dcm_img_hu = dcm_img * the_slope + (the_intercept)
+                print("dcm_img_hu[250:260, 250:260]=\n{0}".format(dcm_img_hu[250:260, 250:260]))
                 
                 # sitk
                 list_series_dcm = [tmp_dcm_fp]
                 itk_image = sitk.ReadImage(list_series_dcm)
                 np_hu_img = sitk.GetArrayFromImage(itk_image)
                 print("np_hu_img.shape={0}".format(np_hu_img.shape))
-                print("np_hu_img[250:256, 250:256]=\n{0}".format(np_hu_img[0, 250:256, 250:256]))
+                print("np_hu_img[250:260, 250:260]=\n{0}".format(np_hu_img[0, 250:260, 250:260]))
+                
+                print("========")
+                np_lut_hu = apply_modality_lut(dcm_img, dcm_data)
+                print("np_lut_hu.shape={0}".format(np_lut_hu.shape))
+                print("np_lut_hu[250:260, 250:260]=\n{0}".format(np_lut_hu[0, 250:260, 250:260]))
+                print("========")
                 
                 
             

@@ -93,8 +93,8 @@ if __name__ == '__main__':
     #
     # setting, usually modified
     #
-    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
+    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/train"
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_yh_ana.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
     dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom/bit12_test"
     dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom/bit12_test/X2"
     
