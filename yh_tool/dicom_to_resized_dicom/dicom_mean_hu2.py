@@ -217,6 +217,11 @@ if __name__ == '__main__':
             if tmp_min_val < -1024.0:
                 hu_min_exception_cnt += 1
                 list_hu_min.append(tmp_min_val)
+                
+            if tmp_max_val == 2515:
+                print("2515 at {0}".format(tmp_dcm_fn))
+            if tmp_max_val == -2048:
+                print("-2048 at {0}".format(tmp_dcm_fn))
         
         
         print("hu_max={0}".format(hu_max))
