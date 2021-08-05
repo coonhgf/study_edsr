@@ -266,9 +266,8 @@ class checkpoint():
                         # #dcm_data.LargestImagePixelValue = 4095
                         ### => bef sleep, test 12bit to 16bit, should to intercept=0, slope=1
                         np_rst_round = np.round(np_rst, 0)
-                        np_rst_round = np_rst_round - 1024.0
-                        np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
-                        np_rst_clip_i16 = np_rst_clip.astype(np.int16)
+                        #np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
+                        np_rst_clip_i16 = np_rst_round.astype(np.int16)
                         dcm_data.PixelData = np_rst_clip_i16.tobytes()
                         print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
                         dcm_data.Rows, dcm_data.Columns = np_rst_clip_i16.shape

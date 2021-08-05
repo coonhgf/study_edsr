@@ -65,14 +65,14 @@ class EDSR(nn.Module):
         self.tail = nn.Sequential(*m_tail)
 
     def forward(self, x):
-        ####x = self.sub_mean(x)
+        x = self.sub_mean(x)
         x = self.head(x)
 
         res = self.body(x)
         res += x
 
         x = self.tail(res)
-        ####x = self.add_mean(x)
+        x = self.add_mean(x)
 
         return x
 

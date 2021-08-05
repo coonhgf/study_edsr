@@ -14,6 +14,7 @@ import torch.utils.data as data
 ### [y]
 from utility import log_initialize
 from pydicom import dcmread
+from pydicom.pixel_data_handlers.util import apply_modality_lut
 
 class SRData(data.Dataset):
     def __init__(self, args, name='', train=True, benchmark=False):
@@ -161,10 +162,11 @@ class SRData(data.Dataset):
                 # => should be to hu:
                 dcm_data = dcmread(img)
                 dcm_img = dcm_data.pixel_array.astype(np.float32)
-                the_intercept = dcm_data.RescaleIntercept
-                the_slope = dcm_data.RescaleSlope
-                dcm_img_hu = dcm_img * the_slope + the_intercept
-                dcm_img_hu_clip = np.clip(dcm_img_hu, -2048.0, 3071.0)
+                #the_intercept = dcm_data.RescaleIntercept
+                #the_slope = dcm_data.RescaleSlope
+                #dcm_img_hu = dcm_img * the_slope + the_intercept
+                dcm_img_hu = apply_modality_lut(dcm_img, dcm_data)
+                #dcm_img_hu_clip = np.clip(dcm_img_hu, -2048.0, 3071.0)
                 ####dcm_img_shift = dcm_img_hu_clip + 2048
                 pickle.dump(dcm_img_hu_clip, _f)
 
