@@ -117,7 +117,6 @@ class Trainer():
                     if self.args.rgb_range == 255:
                         sr = utility.quantize(sr, self.args.rgb_range)
                     elif self.args.rgb_range == 5119:
-                        print("yh quantize for dicom ")
                         sr = utility.quantize_dicom(sr, self.args.rgb_range)
                     else:
                         print("not valid, condition of quantize")
