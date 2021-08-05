@@ -237,7 +237,7 @@ class checkpoint():
                         print("shape of np_rst_oristyle_i16={0}".format(np_rst_oristyle_i16.shape))
                         dcm_data.Rows, dcm_data.Columns = np_rst_oristyle_i16.shape
                         dcm_data.BitsStored = 16
-                        
+                        dcm_data.HighBit = 15
                         
                         # save
                         dcm_data.save_as(filename)
