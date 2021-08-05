@@ -233,7 +233,8 @@ class checkpoint():
                             print("\n\n\n Error, the_slope=0 in file:{0}".format(ori_dcm_fp))
                         np_rst_oristyle = (np_rst_clip - the_intercept) / the_slope
                         np_rst_oristyle_i16 = np_rst_oristyle.astype(np.int16)
-                        dcm_data.PixelData = np_rst_oristyle_i16.tostring()
+                        ####dcm_data.PixelData = np_rst_oristyle_i16.tostring()
+                        dcm_data.PixelData = np_rst_oristyle_i16.tobytes()
                         print("shape of np_rst_oristyle_i16={0}".format(np_rst_oristyle_i16.shape))
                         dcm_data.Rows, dcm_data.Columns = np_rst_oristyle_i16.shape
                         dcm_data.BitsStored = 16
