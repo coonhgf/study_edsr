@@ -166,7 +166,7 @@ class SRData(data.Dataset):
                 dcm_img_hu = dcm_img * the_slope + the_intercept
                 dcm_img_hu_clip = np.clip(dcm_img_hu, -2048.0, 3071.0)
                 ####dcm_img_shift = dcm_img_hu_clip + 2048
-                pickle.dump(dcm_img_shift, _f)
+                pickle.dump(dcm_img_hu_clip, _f)
 
     def __getitem__(self, idx):
         lr, hr, filename = self._load_file(idx)
