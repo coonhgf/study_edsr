@@ -297,8 +297,10 @@ def calc_psnr(sr, hr, scale, rgb_range, dataset=None):
     return -10 * math.log10(mse)
 
 def quantize_dicom(img, rgb_range):
-    pixel_range = 5119 / rgb_range
-    return img.mul(pixel_range).clamp(0, 5119).round().div(pixel_range)
+    ####pixel_range = 5119 / rgb_range
+    ####return img.mul(pixel_range).clamp(0, 5119).round().div(pixel_range)
+    #=>
+    return img
 
 def calc_psnr_dicom(sr, hr, scale, rgb_range=5119, dataset=None):
     if hr.nelement() == 1:
