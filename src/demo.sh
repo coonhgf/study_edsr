@@ -22,7 +22,8 @@
 #python main.py --model EDSR --data_train yh_sr_exp2 --data_test yh_sr_exp2 --scale 2 --patch_size 48 --save med_exp2_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
 # 37.209, med_exp3, dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3)
 #python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 48 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
-
+# 37.209, med_exp3, dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3)
+#python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset
 
 
 
