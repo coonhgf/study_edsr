@@ -225,8 +225,8 @@ class checkpoint():
                         # dcm_data.Rows, dcm_data.Columns = np_rst_oristyle_i16.shape
                         ### =>
                         np_rst_round = np.round(np_rst, 0)
-                        ####np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
-                        np_rst_clip = np.clip(np_rst_round, -1024.0, 3071.0)
+                        np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
+                        ####np_rst_clip = np.clip(np_rst_round, -1024.0, 3071.0)
                         # convert back to ori-style
                         the_intercept = dcm_data.RescaleIntercept
                         the_slope = dcm_data.RescaleSlope
@@ -240,8 +240,8 @@ class checkpoint():
                         dcm_data.Rows, dcm_data.Columns = np_rst_oristyle_i16.shape
                         dcm_data.BitsStored = 16
                         dcm_data.HighBit = 15
-                        dcm_data.SmallestImagePixelValue = 0
-                        dcm_data.LargestImagePixelValue = 4095
+                        #dcm_data.SmallestImagePixelValue = 0
+                        #dcm_data.LargestImagePixelValue = 4095
                         
                         # save
                         dcm_data.save_as(filename)
