@@ -185,7 +185,7 @@ if __name__ == '__main__':
             #dcm_img_hu = dcm_img * the_slope + the_intercept
             #=>
             dcm_img_hu = apply_modality_lut(dcm_img, dcm_data)
-            print("type of dcm_img_hu:{0}".format(type(dcm_img_hu)))
+            #print("type of dcm_img_hu:{0}".format(type(dcm_img_hu)))
             
             # calc mean of this slice
             a_mean_of_slice = np.mean(dcm_img_hu)
