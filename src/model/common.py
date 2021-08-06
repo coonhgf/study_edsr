@@ -69,9 +69,9 @@ class MeanShift_Ch1_dicom(nn.Conv2d):
         super(MeanShift_Ch1_dicom, self).__init__(1, 1, kernel_size=1)
         std = torch.Tensor(rgb_std)
         if sign == -1:
-            self.weight.data = (torch.eye(1).view(1, 1, 1, 1) / std.view(1)) / 50.0
+            self.weight.data = (torch.eye(1).view(1, 1, 1, 1) / std.view(1)) / 100.0
         else:
-            self.weight.data = (torch.eye(1).view(1, 1, 1, 1) / std.view(1)) * 50.0
+            self.weight.data = (torch.eye(1).view(1, 1, 1, 1) / std.view(1)) * 100.0
         self.bias.data = torch.Tensor([0.0])
         for p in self.parameters():
             p.requires_grad = False
