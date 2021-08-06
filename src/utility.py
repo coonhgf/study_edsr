@@ -278,8 +278,8 @@ class checkpoint():
                         dcm_data.RescaleSlope = 1
                         #dcm_data.SmallestImagePixelValue = 0
                         #dcm_data.LargestImagePixelValue = 4095
-                        del dcm_data["SmallestImagePixelValue"]
-                        del dcm_data["LargestImagePixelValue"]
+                        #del dcm_data["SmallestImagePixelValue"]
+                        #del dcm_data["LargestImagePixelValue"]
                         
                         # save
                         dcm_data.save_as(filename)
