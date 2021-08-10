@@ -269,7 +269,7 @@ class checkpoint():
                         #np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
                         np_rst_clip_i16 = np_rst_round.astype(np.int16)
                         dcm_data.PixelData = np_rst_clip_i16.tobytes()
-                        print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
+                        #print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
                         dcm_data.Rows, dcm_data.Columns = np_rst_clip_i16.shape
                         dcm_data.BitsStored = 16
                         dcm_data.HighBit = 15
@@ -318,7 +318,7 @@ class checkpoint():
     def save_results_dicom(self, dataset, filename, save_list, scale, HR_dp):
         if self.args.save_results:
             ori_dcm_fp = os.path.join(HR_dp, "{0}.dcm".format(filename))
-            print("ori_dcm_fp={0}".format(ori_dcm_fp))
+            #print("ori_dcm_fp={0}".format(ori_dcm_fp))
             
             filename = self.get_path(
                 'results-{}'.format(dataset.dataset.name),
