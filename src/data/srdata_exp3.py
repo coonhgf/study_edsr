@@ -15,6 +15,19 @@ import torch.utils.data as data
 from utility import log_initialize
 from pydicom import dcmread
 from pydicom.pixel_data_handlers.util import apply_modality_lut
+import matplotlib.pyplot as plt
+import datetime
+
+
+
+def apply_lung_window(np_hu_img):
+    set_lung_window = np.array([-1200.0, 600.0])  # [y] from hu to hu, not (window_center, window_length)
+    np_lw_img = (np_hu_img-set_lung_window[0]) / (set_lung_window[1]-set_lung_window[0])
+    np_lw_img[np_lw_img < 0]=0
+    np_lw_img[np_lw_img > 1]=1
+    np_lw_img = (np_lw_img*255).astype('uint8')
+    return 0, np_lw_img
+
 
 class SRData(data.Dataset):
     def __init__(self, args, name='', train=True, benchmark=False):
@@ -176,6 +189,19 @@ class SRData(data.Dataset):
         
         pair = self.get_patch(lr, hr)
         pair = common.set_channel(*pair, n_channels=self.args.n_colors)
+        
+        ### [y] to lung win, save image
+        for a_np_img in pair:
+            save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug"
+            time_stmp = datetime.datetime.utcnow().strftime('%Y%m%d.%H%M%S')  # [y] UTC time
+            save_img_fp = os.path.join(save_img_dp, "{0}.png".format(time_stmp))
+            tmpv, np_lung_win_img = apply_lung_window(a_np_img)
+            fig = plt.figure()
+            ax = fig.add_subplot(1, 1, 1)
+            ax.imshow(np_lung_win_img, cmap='gray')
+            plt.savefig(save_img_fp)
+        ###
+        
         pair_t = common.np2Tensor_dicom(*pair)
 
         return pair_t[0], pair_t[1], filename
