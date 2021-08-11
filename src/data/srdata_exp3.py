@@ -188,11 +188,10 @@ class SRData(data.Dataset):
                 a_fn = os.path.basename(img)
                 tmp_list = os.path.splitext(a_fn)
                 only_fn = tmp_list[0]
-                only_ext = tmp_list[1]
                 print("\n\ndebug, only_fn={0}".format(only_fn))
                 if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006"]:
                     print("found : {0} !!!!!".format(only_fn))
-                    save_img_fp = os.path.join(save_img_dp, "{0}__{1}{2}".format(only_fn, "at_save_bin", only_ext))
+                    save_img_fp = os.path.join(save_img_dp, "{0}__{1}.png".format(only_fn, "at_save_bin"))
                     print("save_img_fp={0}".format(save_img_fp))
                     tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
                     fig = plt.figure()
