@@ -182,6 +182,23 @@ class SRData(data.Dataset):
                 dcm_img_hu = apply_modality_lut(dcm_img, dcm_data)
                 #dcm_img_hu_clip = np.clip(dcm_img_hu, -2048.0, 3071.0)
                 ####dcm_img_shift = dcm_img_hu_clip + 2048
+                
+                ### [y] to lung win, save image
+                save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug_at_save_bin"
+                tmp_list = os.path.splitext(img)
+                only_fn = tmp_list[0]
+                only_ext = tmp_list[1]
+                if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006"]:
+                    print("found : {0} !!!!!".format(only_fn))
+                    save_img_fp = os.path.join(save_img_dp, "{0}__{1}{2}".format(only_fn, "at_save_bin", only_ext))
+                    print("save_img_fp={0}".format(save_img_fp))
+                    tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
+                    fig = plt.figure()
+                    ax = fig.add_subplot(1, 1, 1)
+                    ax.imshow(np_lung_win_img, cmap='gray')
+                    plt.savefig(save_img_fp)
+                ###
+                
                 pickle.dump(dcm_img_hu, _f)
 
     def __getitem__(self, idx):
