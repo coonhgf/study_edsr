@@ -189,7 +189,8 @@ class SRData(data.Dataset):
                 tmp_list = os.path.splitext(a_fn)
                 only_fn = tmp_list[0]
                 print("\n\ndebug, only_fn={0}".format(only_fn))
-                if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006"]:
+                if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+                               "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
                     print("found : {0} !!!!!".format(only_fn))
                     if hr0_or_lr1 == 0:
                         save_img_fp = os.path.join(save_img_dp, "{0}__{1}__hr.png".format(only_fn, "at_save_bin"))
