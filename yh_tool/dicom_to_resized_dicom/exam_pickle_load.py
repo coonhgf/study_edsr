@@ -99,7 +99,7 @@ if __name__ == '__main__':
     #
     src_hr_pickle_dp = "/home/v5/yh/Eclipse_ws_data/edsr/dataset/yh_sr_exp3/bin/yh_edsr_csh_axial_exp3_train_HR"
     src_lr_pickle_dp = "/home/v5/yh/Eclipse_ws_data/edsr/dataset/yh_sr_exp3/bin/yh_edsr_csh_axial_exp3_train_LR_bicubic/X2"
-    list_pickle_part_fn = ["1113017_038-1__0039", "2335572_o81__0027", "2376137_o94__0006"]
+    list_pickle_part_fn = ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006"]
     hr_rest_fn = ".pt"
     lr_rest_fn = "x2.pt"
     save_load_pickle_dp = "/home/v5/yh/Eclipse_ws_data/edsr/dataset/yh_sr_exp3/bin/debug"
