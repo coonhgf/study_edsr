@@ -147,6 +147,8 @@ if __name__ == '__main__':
         ax.imshow(np_lw_lr, cmap='gray')
         plt.savefig(save_img_fp)
         ###
+        
+        time.sleep(2)
     
     
     print("convert dicom to resized dicom end")
