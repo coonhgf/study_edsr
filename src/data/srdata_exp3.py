@@ -185,7 +185,8 @@ class SRData(data.Dataset):
                 
                 ### [y] to lung win, save image
                 save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug_at_save_bin"
-                tmp_list = os.path.splitext(img)
+                a_fn = os.path.basename(img)
+                tmp_list = os.path.splitext(a_fn)
                 only_fn = tmp_list[0]
                 only_ext = tmp_list[1]
                 print("\n\ndebug, only_fn={0}".format(only_fn))
