@@ -196,13 +196,17 @@ class SRData(data.Dataset):
             save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug"
             time_stmp = datetime.datetime.utcnow().strftime('%Y%m%d.%H%M%S')  # [y] UTC time
             save_img_fp = os.path.join(save_img_dp, "{0}.png".format(time_stmp))
+            print("filename={0}".format(filename))
+            print("shape of a_np_img={0}".format(a_np_img.shape))
+            print("save_img_fp={0}".format(save_img_fp))
             tmpv, np_lung_win_img = apply_lung_window(a_np_img)
             fig = plt.figure()
             ax = fig.add_subplot(1, 1, 1)
             ax.imshow(np_lung_win_img, cmap='gray')
             plt.savefig(save_img_fp)
         ###
-        time.sleep(2)
+        time.sleep(10)
+        print("\n\n\n")
         
         pair_t = common.np2Tensor_dicom(*pair)
 
