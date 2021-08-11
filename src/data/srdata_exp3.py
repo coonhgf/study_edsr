@@ -192,10 +192,10 @@ class SRData(data.Dataset):
         pair = common.set_channel(*pair, n_channels=self.args.n_colors)
         
         ### [y] to lung win, save image
-        for a_np_img in pair:
+        for dbidx, a_np_img in enumerate(pair):
             save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug"
             time_stmp = datetime.datetime.utcnow().strftime('%Y%m%d.%H%M%S')  # [y] UTC time
-            save_img_fp = os.path.join(save_img_dp, "{0}.png".format(time_stmp))
+            save_img_fp = os.path.join(save_img_dp, "{0}__{1}.png".format(time_stmp, dbidx))
             print("filename={0}".format(filename))
             print("shape of a_np_img={0}".format(a_np_img.shape))
             print("save_img_fp={0}".format(save_img_fp))
@@ -204,9 +204,8 @@ class SRData(data.Dataset):
             ax = fig.add_subplot(1, 1, 1)
             ax.imshow(np_lung_win_img, cmap='gray')
             plt.savefig(save_img_fp)
-            time.sleep(0.5)
         ###
-        time.sleep(1000)
+        time.sleep(4)
         print("\n\n\n")
         
         pair_t = common.np2Tensor_dicom(*pair)
