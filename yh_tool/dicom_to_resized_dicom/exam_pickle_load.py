@@ -123,7 +123,7 @@ if __name__ == '__main__':
             np_hr = pickle.load(_f)
             print("shape of np_hr={0}".format(np_hr.shape))
             
-        lr_fp = os.path.join(src_hr_pickle_dp, "{0}{1}".format(a_fn, lr_rest_fn))
+        lr_fp = os.path.join(src_lr_pickle_dp, "{0}{1}".format(a_fn, lr_rest_fn))
         with open(lr_fp, 'rb') as _f:
             np_lr = pickle.load(_f)
             print("shape of np_lr={0}".format(np_lr.shape))
