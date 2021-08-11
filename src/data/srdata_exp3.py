@@ -204,8 +204,9 @@ class SRData(data.Dataset):
             ax = fig.add_subplot(1, 1, 1)
             ax.imshow(np_lung_win_img, cmap='gray')
             plt.savefig(save_img_fp)
+            time.sleep(0.5)
         ###
-        time.sleep(10)
+        time.sleep(1000)
         print("\n\n\n")
         
         pair_t = common.np2Tensor_dicom(*pair)
