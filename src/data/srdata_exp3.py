@@ -102,13 +102,13 @@ class SRData(data.Dataset):
                 b = h.replace(self.apath, path_bin)
                 b = b.replace(self.ext[0], '.pt')
                 self.images_hr.append(b)
-                self._check_and_load(args.ext, h, b, verbose=True) 
+                self._check_and_load(args.ext, h, b, verbose=True, hr0_or_lr1=0) 
             for i, ll in enumerate(list_lr):
                 for l in ll:
                     b = l.replace(self.apath, path_bin)
                     b = b.replace(self.ext[1], '.pt')
                     self.images_lr[i].append(b)
-                    self._check_and_load(args.ext, l, b, verbose=True)
+                    self._check_and_load(args.ext, l, b, verbose=True, hr0_or_lr1=1)
         if train:
             n_patches = args.batch_size * args.test_every
             n_images = len(args.data_train) * len(self.images_hr)
@@ -161,7 +161,7 @@ class SRData(data.Dataset):
         print("[y] end srdata's [exp3] _set_filesystem()")
         
 
-    def _check_and_load(self, ext, img, f, verbose=True):
+    def _check_and_load(self, ext, img, f, verbose=True, hr0_or_lr1=0):
         if not os.path.isfile(f) or ext.find('reset') >= 0:
             if verbose:
                 print('Making a binary: {}'.format(f))
@@ -191,7 +191,10 @@ class SRData(data.Dataset):
                 print("\n\ndebug, only_fn={0}".format(only_fn))
                 if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006"]:
                     print("found : {0} !!!!!".format(only_fn))
-                    save_img_fp = os.path.join(save_img_dp, "{0}__{1}.png".format(only_fn, "at_save_bin"))
+                    if hr0_or_lr1 == 0:
+                        save_img_fp = os.path.join(save_img_dp, "{0}__{1}__hr.png".format(only_fn, "at_save_bin"))
+                    else:
+                        save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr.png".format(only_fn, "at_save_bin"))
                     print("save_img_fp={0}".format(save_img_fp))
                     tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
                     fig = plt.figure()
