@@ -16,6 +16,7 @@ from utility import log_initialize
 from pydicom import dcmread
 from pydicom.pixel_data_handlers.util import apply_modality_lut
 import matplotlib.pyplot as plt
+import time
 import datetime
 
 
