@@ -201,6 +201,7 @@ class SRData(data.Dataset):
             ax.imshow(np_lung_win_img, cmap='gray')
             plt.savefig(save_img_fp)
         ###
+        time.sleep(1000)
         
         pair_t = common.np2Tensor_dicom(*pair)
 
