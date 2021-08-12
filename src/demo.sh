@@ -27,7 +27,7 @@
 # 37.209, med_exp3, dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3) with loss:MSE
 #python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset --decay 100 --loss 1*MSE --save_results
 # 37.209, med_exp4(but ds name is exp3, for not mdf code), dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3) with loss:L1
-python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset --decay 80 --loss 1*L1 --save_results --epochs 300
+#python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset --decay 80 --loss 1*L1 --save_results --epochs 300
 
 
 
@@ -72,7 +72,7 @@ python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --sca
 # 37.209, test with med_exp3 val data, with hu training, and save as dicom code
 #python main.py --data_test yh_sr_exp3 --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp3_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp3" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --patch_size 48
 #python main.py --data_test yh_sr_exp3 --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp3_x2__u_model4_no_shift2048/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp3" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --patch_size 48
-#python main.py --data_test yh_sr_exp3 --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp3_x2__u_model5_no_shift_div100/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp3" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --patch_size 96
+python main.py --data_test yh_sr_exp3 --scale 2 --pre_train /home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/med_exp3_x2/model/model_best.pt --test_only --save_results --dir_demo "../test_med_exp3" --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --patch_size 96
 
 
 

@@ -293,19 +293,10 @@ class checkpoint():
                         print("max_val={0}".format(max_val))
                         print("min_val={0}".format(min_val))
                         np_rst_clip = np.clip(np_rst_round, src_min_val, src_max_val)
-                        np_rst_clip_i16 = np_rst_round.astype(np.int16)
-                        dcm_data.PixelData = np_rst_clip_i16.tobytes()
+                        np_rst_clip_uint16 = np_rst_clip.astype(np.uint16)
+                        dcm_data.PixelData = np_rst_clip_uint16.tobytes()
                         #print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
-                        dcm_data.Rows, dcm_data.Columns = np_rst_clip_i16.shape
-                        dcm_data.BitsStored = 16
-                        dcm_data.HighBit = 15
-                        dcm_data.PixelRepresentation = 1
-                        dcm_data.RescaleIntercept = 0
-                        dcm_data.RescaleSlope = 1
-                        #dcm_data.SmallestImagePixelValue = 0
-                        #dcm_data.LargestImagePixelValue = 4095
-                        #del dcm_data["SmallestImagePixelValue"]
-                        #del dcm_data["LargestImagePixelValue"]
+                        dcm_data.Rows, dcm_data.Columns = np_rst_clip_uint16.shape
                         
                         # save
                         dcm_data.save_as(filename)
