@@ -225,7 +225,7 @@ if __name__ == '__main__':
             
             # resize image
             resize_factor = [0.5, 0.5]  # ex : 512 to 256
-            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=2)
+            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
             #print("[120:128, 120:128]")
             #print("dcm_img_x2:\n{0}".format(dcm_img_x2[120:128, 120:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
