@@ -345,7 +345,8 @@ class checkpoint():
             postfix = ('SR', 'LR', 'HR')
             for v, p in zip(save_list, postfix):
                 normalized = v[0].mul(5119 / self.args.rgb_range)
-                tensor_cpu = normalized.byte().permute(1, 2, 0).cpu()
+                #tensor_cpu = normalized.byte().permute(1, 2, 0).cpu()
+                tensor_cpu = normalized.short().permute(1, 2, 0).cpu()
                 self.queue.put(('{}{}.dcm'.format(filename, p), tensor_cpu, ori_dcm_fp))
 
 def quantize(img, rgb_range):
