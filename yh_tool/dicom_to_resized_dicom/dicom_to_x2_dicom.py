@@ -97,10 +97,10 @@ if __name__ == '__main__':
     #
     # setting, usually modified
     #
-    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_val.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
-    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_val_HR"
-    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_val_LR_bicubic/X2"
+    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/train"
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_train.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
+    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_train_HR"
+    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_train_LR_bicubic/X2"
     
     #
     # auto set
@@ -210,8 +210,10 @@ if __name__ == '__main__':
             tmp_list = os.path.splitext(a_fn)
             only_fn = tmp_list[0]
             print("\n\ndebug, only_fn={0}".format(only_fn))
-            if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
-                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            #if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+            #               "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            if only_fn in ["1157515_o40__0018", "2322964_o76__0034", "2369217_o91__0048", \
+                           "1157515_o40__0018x2", "2322964_o76__0034x2", "2369217_o91__0048x2"]:
                 save_img_fp = os.path.join(save_img_dp, "{0}__{1}__hr.png".format(only_fn, "gen_data"))
                 dcm_img_hu = apply_modality_lut(dcm_img, dcm_data)
                 tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
@@ -228,11 +230,16 @@ if __name__ == '__main__':
             #print("dcm_img_x2:\n{0}".format(dcm_img_x2[120:128, 120:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
             dcm_img_x2 = np.clip(dcm_img_x2, hr_min_val, hr_max_val)
-            dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
-            #print("dcm_img_x2_i16:{0}".format(dcm_img_x2_i16[120:128, 120:128]))
-            #dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)  # notice, no clip here
-            dcm_data.PixelData = dcm_img_x2_i16.tobytes()
-            dcm_data.Rows, dcm_data.Columns = dcm_img_x2_i16.shape
+            # use PixelRepresentation to decide convertion type
+            if dcm_data.PixelRepresentation == 0:
+                dcm_img_x2_typecvt = dcm_img_x2.astype(np.uint16)
+            elif dcm_data.PixelRepresentation == 1:
+                dcm_img_x2_typecvt = dcm_img_x2.astype(np.int16)
+            else:
+                print("dcm_data.PixelRepresentation not valid, now is : {0}".format(dcm_data.PixelRepresentation))
+                exit(-1)
+            dcm_data.PixelData = dcm_img_x2_typecvt.tobytes()
+            dcm_data.Rows, dcm_data.Columns = dcm_img_x2_typecvt.shape
             
             #
             # [y]
@@ -245,8 +252,10 @@ if __name__ == '__main__':
             #
             # [y] save lr to png
             #
-            if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
-                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            #if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+            #               "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            if only_fn in ["1157515_o40__0018", "2322964_o76__0034", "2369217_o91__0048", \
+                           "1157515_o40__0018x2", "2322964_o76__0034x2", "2369217_o91__0048x2"]:
                 save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr.png".format(only_fn, "gen_data"))
                 dcm_img_hu_x2 = apply_modality_lut(dcm_img_x2, dcm_data)
                 tmpv, np_lung_win_img_x2 = apply_lung_window(dcm_img_hu_x2)
@@ -266,8 +275,10 @@ if __name__ == '__main__':
             #
             # [y] read x2 dicom after saving
             #
-            if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
-                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            #if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+            #               "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            if only_fn in ["1157515_o40__0018", "2322964_o76__0034", "2369217_o91__0048", \
+                           "1157515_o40__0018x2", "2322964_o76__0034x2", "2369217_o91__0048x2"]:
                 dcm_data_rback = dcmread(slice_fp)
                 dcm_img_rback = dcm_data_rback.pixel_array.astype(np.float32)
                 dcm_img_hu_rback = apply_modality_lut(dcm_img_rback, dcm_data_rback)
