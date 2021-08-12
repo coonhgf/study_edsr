@@ -225,12 +225,12 @@ if __name__ == '__main__':
             
             # resize image
             resize_factor = [0.5, 0.5]  # ex : 512 to 256
-            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=3)
-            print("[120:128, 120:128]")
-            print("dcm_img_x2:\n{0}".format(dcm_img_x2[120:128, 120:128]))
+            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=2)
+            #print("[120:128, 120:128]")
+            #print("dcm_img_x2:\n{0}".format(dcm_img_x2[120:128, 120:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
             dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
-            print("dcm_img_x2_i16:{0}".format(dcm_img_x2_i16[120:128, 120:128]))
+            #print("dcm_img_x2_i16:{0}".format(dcm_img_x2_i16[120:128, 120:128]))
             #dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)  # notice, no clip here
             dcm_data.PixelData = dcm_img_x2_i16.tobytes()
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_i16.shape
@@ -288,6 +288,7 @@ if __name__ == '__main__':
                 ax.imshow(np_lung_win_img_rback, cmap='gray')
                 plt.savefig(save_img_fp)
             
+            print("\n\n\n")
             
         
     print("convert dicom to resized dicom end")
