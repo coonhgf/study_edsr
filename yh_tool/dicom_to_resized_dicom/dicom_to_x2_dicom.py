@@ -225,10 +225,11 @@ if __name__ == '__main__':
             
             # resize image
             resize_factor = [0.5, 0.5]  # ex : 512 to 256
-            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=1)
+            dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=2)
             #print("[120:128, 120:128]")
             #print("dcm_img_x2:\n{0}".format(dcm_img_x2[120:128, 120:128]))
             dcm_img_x2 = np.round(dcm_img_x2, 0)
+            dcm_img_x2 = np.clip(dcm_img_x2, hr_min_val, hr_max_val)
             dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
             #print("dcm_img_x2_i16:{0}".format(dcm_img_x2_i16[120:128, 120:128]))
             #dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)  # notice, no clip here
