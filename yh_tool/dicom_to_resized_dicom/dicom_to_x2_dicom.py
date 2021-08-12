@@ -211,7 +211,7 @@ if __name__ == '__main__':
             dcm_img_x2_i16 = dcm_img_x2.astype(np.int16)
             print("dcm_img_x2_i16:{0}".format(dcm_img_x2_i16[120:128, 120:128]))
             #dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)  # notice, no clip here
-            dcm_data.PixelData = dcm_img_x2_i16.tostring()
+            dcm_data.PixelData = dcm_img_x2_i16.tobytes()
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_i16.shape
             
             
