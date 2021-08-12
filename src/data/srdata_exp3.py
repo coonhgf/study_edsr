@@ -184,24 +184,24 @@ class SRData(data.Dataset):
                 ####dcm_img_shift = dcm_img_hu_clip + 2048
                 
                 ### [y] to lung win, save image
-                save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug_at_save_bin"
-                a_fn = os.path.basename(img)
-                tmp_list = os.path.splitext(a_fn)
-                only_fn = tmp_list[0]
-                print("\n\ndebug, only_fn={0}".format(only_fn))
-                if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
-                               "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
-                    print("found : {0} !!!!!".format(only_fn))
-                    if hr0_or_lr1 == 0:
-                        save_img_fp = os.path.join(save_img_dp, "{0}__{1}__hr.png".format(only_fn, "at_save_bin"))
-                    else:
-                        save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr.png".format(only_fn, "at_save_bin"))
-                    print("save_img_fp={0}".format(save_img_fp))
-                    tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
-                    fig = plt.figure()
-                    ax = fig.add_subplot(1, 1, 1)
-                    ax.imshow(np_lung_win_img, cmap='gray')
-                    plt.savefig(save_img_fp)
+                # save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug_at_save_bin"
+                # a_fn = os.path.basename(img)
+                # tmp_list = os.path.splitext(a_fn)
+                # only_fn = tmp_list[0]
+                # print("\n\ndebug, only_fn={0}".format(only_fn))
+                # if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+                #                "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+                #     print("found : {0} !!!!!".format(only_fn))
+                #     if hr0_or_lr1 == 0:
+                #         save_img_fp = os.path.join(save_img_dp, "{0}__{1}__hr.png".format(only_fn, "at_save_bin"))
+                #     else:
+                #         save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr.png".format(only_fn, "at_save_bin"))
+                #     print("save_img_fp={0}".format(save_img_fp))
+                #     tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
+                #     fig = plt.figure()
+                #     ax = fig.add_subplot(1, 1, 1)
+                #     ax.imshow(np_lung_win_img, cmap='gray')
+                #     plt.savefig(save_img_fp)
                 ###
                 
                 pickle.dump(dcm_img_hu, _f)
@@ -213,22 +213,22 @@ class SRData(data.Dataset):
         pair = self.get_patch(lr, hr)
         pair = common.set_channel(*pair, n_channels=self.args.n_colors)
         
-        ### [y] to lung win, save image
-        for dbidx, a_np_img in enumerate(pair):
-            save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug"
-            time_stmp = datetime.datetime.utcnow().strftime('%Y%m%d.%H%M%S')  # [y] UTC time
-            save_img_fp = os.path.join(save_img_dp, "{0}__{1}.png".format(time_stmp, dbidx))
-            print("filename={0}".format(filename))
-            print("shape of a_np_img={0}".format(a_np_img.shape))
-            print("save_img_fp={0}".format(save_img_fp))
-            tmpv, np_lung_win_img = apply_lung_window(a_np_img)
-            fig = plt.figure()
-            ax = fig.add_subplot(1, 1, 1)
-            ax.imshow(np_lung_win_img, cmap='gray')
-            plt.savefig(save_img_fp)
-        ###
-        time.sleep(4)
-        print("\n\n\n")
+        # ### [y] to lung win, save image
+        # for dbidx, a_np_img in enumerate(pair):
+        #     save_img_dp = "/home/v5/yh/Eclipse_ws/edsr/study_edsr/experiment/yh_debug"
+        #     time_stmp = datetime.datetime.utcnow().strftime('%Y%m%d.%H%M%S')  # [y] UTC time
+        #     save_img_fp = os.path.join(save_img_dp, "{0}__{1}.png".format(time_stmp, dbidx))
+        #     print("filename={0}".format(filename))
+        #     print("shape of a_np_img={0}".format(a_np_img.shape))
+        #     print("save_img_fp={0}".format(save_img_fp))
+        #     tmpv, np_lung_win_img = apply_lung_window(a_np_img)
+        #     fig = plt.figure()
+        #     ax = fig.add_subplot(1, 1, 1)
+        #     ax.imshow(np_lung_win_img, cmap='gray')
+        #     plt.savefig(save_img_fp)
+        # ###
+        # time.sleep(4)
+        # print("\n\n\n")
         
         pair_t = common.np2Tensor_dicom(*pair)
 
