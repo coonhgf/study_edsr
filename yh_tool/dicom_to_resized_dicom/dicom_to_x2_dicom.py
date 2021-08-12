@@ -18,6 +18,7 @@ from PIL import Image
 from pydicom import dcmread
 from scipy.ndimage.interpolation import zoom
 import shutil
+from pydicom.pixel_data_handlers.util import apply_modality_lut
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
@@ -179,6 +180,25 @@ if __name__ == '__main__':
             dcm_img = dcm_data.pixel_array.astype(np.float32)
             print("shape of the_dcm_img={0}".format(dcm_img.shape))
             
+            #
+            # [y] convert to lung window, save png
+            #
+            save_img_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/yh_debug_when_gen_x2"
+            a_fn = os.path.basename(dst_fn)
+            tmp_list = os.path.splitext(a_fn)
+            only_fn = tmp_list[0]
+            print("\n\ndebug, only_fn={0}".format(only_fn))
+            if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+                save_img_fp = os.path.join(save_img_dp, "{0}__{1}__hr.png".format(only_fn, "gen_data"))
+                dcm_img_hu = apply_modality_lut(dcm_img, dcm_data)
+                tmpv, np_lung_win_img = apply_lung_window(dcm_img_hu)
+                fig = plt.figure()
+                ax = fig.add_subplot(1, 1, 1)
+                ax.imshow(np_lung_win_img, cmap='gray')
+                plt.savefig(save_img_fp)
+            
+            
             # resize image
             resize_factor = [0.5, 0.5]  # ex : 512 to 256
             dcm_img_x2 = zoom(dcm_img, resize_factor, mode='nearest', order=3)
@@ -190,6 +210,21 @@ if __name__ == '__main__':
             #dcm_img_x2_clip = np.clip(dcm_img_x2_i16, -2048, 3071)  # notice, no clip here
             dcm_data.PixelData = dcm_img_x2_i16.tostring()
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_i16.shape
+            
+            
+            #
+            # [y] save lr to png
+            #
+            if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+                save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr.png".format(only_fn, "gen_data"))
+                dcm_img_hu_x2 = apply_modality_lut(dcm_img_x2, dcm_data)
+                tmpv, np_lung_win_img_x2 = apply_lung_window(dcm_img_hu_x2)
+                fig = plt.figure()
+                ax = fig.add_subplot(1, 1, 1)
+                ax.imshow(np_lung_win_img_x2, cmap='gray')
+                plt.savefig(save_img_fp)
+            
             
             # save 
             slice_fn = "{0}__{1}x2.dcm".format(a_dcm_fd, "%04d" % sidx)
