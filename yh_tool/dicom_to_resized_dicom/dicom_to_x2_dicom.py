@@ -19,6 +19,9 @@ from pydicom import dcmread
 from scipy.ndimage.interpolation import zoom
 import shutil
 from pydicom.pixel_data_handlers.util import apply_modality_lut
+import matplotlib.pyplot as plt
+import time
+import datetime
 
 
 def csv_mapping_get_seri_id_by_folder_name(csv_fp, folder_name):
