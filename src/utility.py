@@ -280,7 +280,42 @@ class checkpoint():
                         # #dcm_data.LargestImagePixelValue = 4095
                         # #del dcm_data["SmallestImagePixelValue"]
                         # #del dcm_data["LargestImagePixelValue"]
-                        ### => fix uint int issue
+                        ### => fix uint int issue, can work 1024
+                        # dcm_img = dcm_data.pixel_array.astype(np.float32)
+                        # src_max_val = np.max(dcm_img)
+                        # src_min_val = np.min(dcm_img)
+                        # print()
+                        # print("src_max_val={0}".format(src_max_val))
+                        # print("src_min_val={0}".format(src_min_val))
+                        #
+                        # max_val = np.max(np_rst)
+                        # min_val = np.min(np_rst)
+                        # print("max_val={0}".format(max_val))
+                        # print("min_val={0}".format(min_val))
+                        # # from hu back to ori format
+                        # the_intercept = dcm_data.RescaleIntercept
+                        # the_slope = dcm_data.RescaleSlope
+                        # if the_slope == 0:
+                        #     np_rst_back = np.zeros(np_rst.shape)
+                        # else:
+                        #     np_rst_back = (np_rst - the_intercept) / the_slope
+                        #
+                        # # see max and min again
+                        # max_back_val = np.max(np_rst_back)
+                        # min_back_val = np.min(np_rst_back)
+                        # print("max_back_val={0}".format(max_back_val))
+                        # print("min_back_val={0}".format(min_back_val))
+                        #
+                        # # clip protect here
+                        # np_rst_clip = np.clip(np_rst_back, src_min_val, src_max_val)
+                        # np_rst_clip_uint16 = np_rst_clip.astype(np.uint16)
+                        # dcm_data.PixelData = np_rst_clip_uint16.tobytes()
+                        # #print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
+                        # dcm_data.Rows, dcm_data.Columns = np_rst_clip_uint16.shape
+                        # => 1024, 2048
+                        #
+                        #
+                        #
                         dcm_img = dcm_data.pixel_array.astype(np.float32)
                         src_max_val = np.max(dcm_img)
                         src_min_val = np.min(dcm_img)
@@ -308,10 +343,16 @@ class checkpoint():
                         
                         # clip protect here
                         np_rst_clip = np.clip(np_rst_back, src_min_val, src_max_val)
-                        np_rst_clip_uint16 = np_rst_clip.astype(np.uint16)
-                        dcm_data.PixelData = np_rst_clip_uint16.tobytes()
+                        if dcm_data.PixelRepresentation == 0:
+                            np_rst_typecvt = np_rst_clip.astype(np.uint16)
+                        elif dcm_data.PixelRepresentation == 1:
+                            np_rst_typecvt = np_rst_clip.astype(np.int16)
+                        else:
+                            print("dcm_data.PixelRepresentation not valid, now is : {0}".format(dcm_data.PixelRepresentation))
+                            exit(-1)
+                        dcm_data.PixelData = np_rst_typecvt.tobytes()
                         #print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
-                        dcm_data.Rows, dcm_data.Columns = np_rst_clip_uint16.shape
+                        dcm_data.Rows, dcm_data.Columns = np_rst_typecvt.shape
                         
                         # save
                         dcm_data.save_as(filename)
