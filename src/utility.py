@@ -264,9 +264,35 @@ class checkpoint():
                         # dcm_data.PixelRepresentation = 0
                         # #dcm_data.SmallestImagePixelValue = 0
                         # #dcm_data.LargestImagePixelValue = 4095
-                        ### => bef sleep, test 12bit to 16bit, should to intercept=0, slope=1
+                        # ### => bef sleep, test 12bit to 16bit, should to intercept=0, slope=1
+                        # np_rst_round = np.round(np_rst, 0)
+                        # #np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
+                        # np_rst_clip_i16 = np_rst_round.astype(np.int16)
+                        # dcm_data.PixelData = np_rst_clip_i16.tobytes()
+                        # #print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
+                        # dcm_data.Rows, dcm_data.Columns = np_rst_clip_i16.shape
+                        # dcm_data.BitsStored = 16
+                        # dcm_data.HighBit = 15
+                        # dcm_data.PixelRepresentation = 1
+                        # dcm_data.RescaleIntercept = 0
+                        # dcm_data.RescaleSlope = 1
+                        # #dcm_data.SmallestImagePixelValue = 0
+                        # #dcm_data.LargestImagePixelValue = 4095
+                        # #del dcm_data["SmallestImagePixelValue"]
+                        # #del dcm_data["LargestImagePixelValue"]
+                        ### => fix uint int issue
+                        dcm_img = dcm_data.pixel_array.astype(np.float32)
+                        src_max_val = np.max(dcm_img)
+                        src_min_val = np.min(dcm_img)
+                        print("src_max_val={0}".format(src_max_val))
+                        print("src_min_val={0}".format(src_min_val))
+                        
                         np_rst_round = np.round(np_rst, 0)
-                        #np_rst_clip = np.clip(np_rst_round, -2048.0, 3071.0)
+                        max_val = np.max(np_rst_round)
+                        min_val = np.min(np_rst_round)
+                        print("max_val={0}".format(max_val))
+                        print("min_val={0}".format(min_val))
+                        np_rst_clip = np.clip(np_rst_round, src_min_val, src_max_val)
                         np_rst_clip_i16 = np_rst_round.astype(np.int16)
                         dcm_data.PixelData = np_rst_clip_i16.tobytes()
                         #print("shape of np_rst_oristyle_i16={0}".format(np_rst_clip_i16.shape))
