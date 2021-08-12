@@ -234,5 +234,23 @@ if __name__ == '__main__':
             print("saved x2 filename={0}\n\n".format(slice_fn))
             slice_fp = os.path.join(dst_png_LR_X2_root_dp, slice_fn)
             dcm_data.save_as(slice_fp)
+            
+            
+            #
+            # [y] read x2 dicom after saving
+            #
+            if only_fn in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+                dcm_data_rback = dcmread(slice_fp)
+                dcm_img_rback = dcm_data_rback.pixel_array.astype(np.float32)
+                dcm_img_hu_rback = apply_modality_lut(dcm_img_rback, dcm_data_rback)
+                tmpv, np_lung_win_img_rback = apply_lung_window(dcm_img_hu_rback)
+                save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr_rback.png".format(only_fn, "gen_data"))
+                fig = plt.figure()
+                ax = fig.add_subplot(1, 1, 1)
+                ax.imshow(np_lung_win_img_rback, cmap='gray')
+                plt.savefig(save_img_fp)
+            
+            
         
     print("convert dicom to resized dicom end")
