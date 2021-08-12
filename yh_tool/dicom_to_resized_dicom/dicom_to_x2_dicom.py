@@ -171,12 +171,12 @@ if __name__ == '__main__':
             #
             # [y] debug
             #
-            a_fn = os.path.basename(dst_fn)
-            tmp_list = os.path.splitext(a_fn)
-            only_fn = tmp_list[0]
-            if only_fn not in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
-                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
-                continue
+            # a_fn = os.path.basename(dst_fn)
+            # tmp_list = os.path.splitext(a_fn)
+            # only_fn = tmp_list[0]
+            # if only_fn not in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+            #                "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+            #     continue
             
             
             #
@@ -219,8 +219,6 @@ if __name__ == '__main__':
                 ax = fig.add_subplot(1, 1, 1)
                 ax.imshow(np_lung_win_img, cmap='gray')
                 plt.savefig(save_img_fp)
-            else:
-                continue
             
             
             # resize image
