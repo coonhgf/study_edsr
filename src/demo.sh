@@ -27,7 +27,7 @@
 # 37.209, med_exp3, dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3) with loss:MSE
 #python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset --decay 100 --loss 1*MSE --save_results
 # 37.209, med_exp4(but ds name is exp3, for not mdf code), dataset:yh_edsr_csh_axial_exp3(yh_sr_exp3) with loss:L1
-python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset --decay 80 --loss 1*L1 --save_results --epochs 600
+python main.py --model EDSR --data_train yh_sr_exp3 --data_test yh_sr_exp3 --scale 2 --patch_size 96 --save med_exp3_x2 --n_resblocks 32 --n_feats 256 --res_scale 0.1 --n_colors 1 --rgb_range 5119 --reset --decay 80 --loss 1*L1 --save_results --epochs 300
 
 
 
