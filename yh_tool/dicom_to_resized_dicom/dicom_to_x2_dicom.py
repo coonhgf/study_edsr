@@ -160,13 +160,24 @@ if __name__ == '__main__':
         # process
         for sidx, tmp_dcm_fn in enumerate(list_filename):
             tmp_dcm_fp = os.path.join(tmp_src_dp, tmp_dcm_fn)
-            print("now dcm fp : {0}".format(tmp_dcm_fp))
+            #print("now dcm fp : {0}".format(tmp_dcm_fp))
             
             # HR
             # just copy dicom
             dst_fn = "{0}__{1}.dcm".format(a_dcm_fd, "%04d" % sidx)
             dst_fp = os.path.join(dst_png_HR_root_dp, dst_fn)
             shutil.copyfile(tmp_dcm_fp, dst_fp)
+            
+            #
+            # [y] debug
+            #
+            a_fn = os.path.basename(dst_fn)
+            tmp_list = os.path.splitext(a_fn)
+            only_fn = tmp_list[0]
+            if only_fn not in ["1113017_038-1__0039", "2335572_o80__0027", "2376137_o94__0006", \
+                           "1113017_038-1__0039x2", "2335572_o80__0027x2", "2376137_o94__0006x2"]:
+                continue
+            
             
             #
             # LR of X2
@@ -182,6 +193,14 @@ if __name__ == '__main__':
             
             dcm_img = dcm_data.pixel_array.astype(np.float32)
             print("shape of the_dcm_img={0}".format(dcm_img.shape))
+            
+            #
+            # [y]
+            #
+            hr_max_val = np.max(dcm_img)
+            hr_min_val = np.min(dcm_img)
+            print("hr_max_val={0}".format(hr_max_val))
+            print("hr_min_val={0}".format(hr_min_val))
             
             #
             # [y] convert to lung window, save png
@@ -200,6 +219,8 @@ if __name__ == '__main__':
                 ax = fig.add_subplot(1, 1, 1)
                 ax.imshow(np_lung_win_img, cmap='gray')
                 plt.savefig(save_img_fp)
+            else:
+                continue
             
             
             # resize image
@@ -214,6 +235,13 @@ if __name__ == '__main__':
             dcm_data.PixelData = dcm_img_x2_i16.tobytes()
             dcm_data.Rows, dcm_data.Columns = dcm_img_x2_i16.shape
             
+            #
+            # [y]
+            #
+            lr_max_val = np.max(dcm_img_x2)
+            lr_min_val = np.min(dcm_img_x2)
+            print("lr_max_val={0}".format(lr_max_val))
+            print("lr_min_val={0}".format(lr_min_val))
             
             #
             # [y] save lr to png
@@ -245,6 +273,15 @@ if __name__ == '__main__':
                 dcm_img_rback = dcm_data_rback.pixel_array.astype(np.float32)
                 dcm_img_hu_rback = apply_modality_lut(dcm_img_rback, dcm_data_rback)
                 tmpv, np_lung_win_img_rback = apply_lung_window(dcm_img_hu_rback)
+                
+                #
+                # [y]
+                #
+                lr_rback_max_val = np.max(dcm_img_rback)
+                lr_rback_min_val = np.min(dcm_img_rback)
+                print("lr_rback_max_val={0}".format(lr_rback_max_val))
+                print("lr_rback_min_val={0}".format(lr_rback_min_val))
+                
                 save_img_fp = os.path.join(save_img_dp, "{0}__{1}__lr_rback.png".format(only_fn, "gen_data"))
                 fig = plt.figure()
                 ax = fig.add_subplot(1, 1, 1)
