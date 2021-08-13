@@ -97,10 +97,10 @@ if __name__ == '__main__':
     #
     # setting, usually modified
     #
-    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/train"
-    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210707_train.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
-    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_train_HR"
-    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_train_LR_bicubic/X2"
+    src_dcm_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original/val2"
+    src_dcm_folder_by_file_fp = "/media/sdc1/home/yh_dataset/edsr/tool_txt/copy_folder_by_file__210813_val2.txt"  # [y] txt檔案, 裡面每一行表示一個folder name, 有列在裡面就會copy
+    dst_png_HR_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_val2_HR"
+    dst_png_LR_X2_root_dp = "/media/sdc1/home/yh_dataset/edsr/yh_edsr_csh_axial/original_to_resized_dicom_exp3/yh_edsr_csh_axial_exp3_val2_LR_bicubic/X2"
     
     #
     # auto set
