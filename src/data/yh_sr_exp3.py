@@ -53,8 +53,8 @@ class yh_sr_exp3(srdata_exp3.SRData):
             if self.input_large: self.dir_lr += 'L'
         else:
             super(yh_sr_exp3, self)._set_filesystem(dir_data)
-            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val_HR')
-            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val_LR_bicubic')
+            self.dir_hr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val2_HR')
+            self.dir_lr = os.path.join(self.apath, 'yh_edsr_csh_axial_exp3_val2_LR_bicubic')
             if self.input_large: self.dir_lr += 'L'
         
         ### [y]
